@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "install": "^0.13.0",
     "next": "14.2.4",
+    "npm": "^10.8.1",
     "ol": "^9.2.4",
     "ol-ext": "^4.0.18",
+    "ol-popup": "^5.1.1",
     "react": "^18",
     "react-dom": "^18"
   },
