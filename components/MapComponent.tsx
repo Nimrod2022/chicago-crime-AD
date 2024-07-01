@@ -6,29 +6,26 @@ import { OSM } from "ol/source";
 import View from "ol/View";
 import { fromLonLat } from "ol/proj";
 import VectorSource from "ol/source/Vector";
-import {GeoJSON }from "ol/format";
+import { GeoJSON } from "ol/format";
 import "ol/ol.css";
 import { fetchBoundaries } from "../utils";
 import VectorLayer from "ol/layer/Vector";
 import Style from "ol/style/Style";
 import Stroke from "ol/style/Stroke";
 import Fill from "ol/style/Fill";
-import { Overlay } from "ol";
+import Overlay from "ol/Overlay";
 
 const BOUNDARIES_URL = "https://nimrod2022.github.io/data/boundaries.geojson";
 
 function MapComponent() {
-  const mapContainer = useRef<HTMLDivElement | null>(null);
-
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
-
-  // Usind the fetch data function
 
   useEffect(() => {
     const getBoundaries = async () => {
       try {
         const data = await fetchBoundaries(BOUNDARIES_URL);
-        console.log(data);
         setBoundaries(data);
       } catch (error) {
         console.error("Error fetching boundaries:", error);
@@ -37,7 +34,6 @@ function MapComponent() {
     getBoundaries();
   }, []);
 
-  // Setting up the map
   useEffect(() => {
     if (mapContainer.current && boundaries) {
       const vectorSource = new VectorSource({
@@ -68,25 +64,47 @@ function MapComponent() {
           vectorLayer,
         ],
         view: new View({
-          center: fromLonLat([-87.79585343500183, 41.851812904278674]), // Longitude, Latitude
+          center: fromLonLat([-87.79585343500183, 41.851812904278674]),
           zoom: 11,
         }),
       });
 
-      // Popup
+      const overlay = new Overlay({
+        element: popupContainer.current
+          ? popupContainer.current
+          : document.createElement("div"),
+        autoPan: true,
+      });
+      map.addOverlay(overlay);
 
-    
+      map.on("pointermove", function (evt) {
+        if (map.hasFeatureAtPixel(evt.pixel)) {
+          const feature = map.getFeaturesAtPixel(evt.pixel)[0];
+          const districtName = feature.get("pri_neigh");
+          if (popupContainer.current) {
+            overlay.setPosition(evt.coordinate);
+            popupContainer.current.innerHTML = districtName;
+            overlay.setElement(popupContainer.current);
+          }
+        } else {
+          overlay.setPosition(undefined);
+        }
+      });
 
-
-
-      // Clean up the map instance on component unmount
       return () => {
         map.setTarget(undefined);
       };
     }
   }, [boundaries]);
 
-  return <div ref={mapContainer} className="map"></div>;
+  return (
+    <div>
+      <div ref={mapContainer} className="map"></div>
+      <div ref={popupContainer} className="ol-popup">
+        <div className="ol-popup-content"></div>
+      </div>
+    </div>
+  );
 }
 
 export default MapComponent;
