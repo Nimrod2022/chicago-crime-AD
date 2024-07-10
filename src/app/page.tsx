@@ -1,14 +1,8 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
+
 import { MapComponent } from "../components";
-import CrimeCount from "../components/CrimeCount";
-import CrimeFilterForm from "@/components/CrimeFilterForm";
-import { CrimeFilterFormProps } from "../../types";
-import FilterCrime from "@/components/FilterCrime";
 
 export default function Home() {
-
   return (
     <main>
       <div className="flex">
@@ -28,10 +22,6 @@ export default function Home() {
               </ul>
             </div>
           </nav>
-
-          <FilterCrime/>
-
-         
         </div>
       </div>
     </main>
