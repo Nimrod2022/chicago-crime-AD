@@ -9,14 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "https": "^1.0.0",
     "install": "^0.13.0",
     "next": "14.2.4",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
     "npm": "^10.8.1",
     "ol": "^9.2.4",
     "ol-ext": "^4.0.18",
     "ol-popup": "^5.1.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "stream-json": "^1.8.0"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -1,8 +1,16 @@
-export async function fetchBoundaries(url: string) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Failed to fetch GeoJSON data");
+export async function fetchData(url:string) {
+  console.log("Fetching URL:", url);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error("Network response was not ok", response.statusText);
+      throw new Error("Failed to fetch GeoJSON data");
+    }
+    const data = await response.json();
+    // console.log("Data received:", data);
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    throw error;
   }
-  const data = await response.json();
-  return data;
 }
