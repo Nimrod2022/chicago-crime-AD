@@ -1,5 +1,6 @@
 "use client";
 
+import CrimeFilterForm from "@/components/CrimeFilterForm";
 import { MapComponent } from "../components";
 
 export default function Home() {
@@ -22,6 +23,10 @@ export default function Home() {
               </ul>
             </div>
           </nav>
+
+          <div>
+            <CrimeFilterForm/>
+          </div>
         </div>
       </div>
     </main>
