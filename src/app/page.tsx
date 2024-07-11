@@ -2,7 +2,8 @@
 
 import CrimeFilterForm from "@/components/CrimeFilterForm";
 import { MapComponent } from "../components";
-import CrimeCategories from "@/components/CrimeCategories";
+import CrimeCategories from "@/components/TotalCrimes";
+import TotalCrimes from "@/components/TotalCrimes";
 
 export default function Home() {
   // async function fetchCrimeCategories() {
@@ -42,7 +43,7 @@ export default function Home() {
 
           <div>
             <CrimeFilterForm />
-            <CrimeCategories />
+            <TotalCrimes/>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
-const CrimeCategories = () => {
+const TotalCrimes = () => {
   
   const { crimeCategories } = useCrimeContext();
 
@@ -17,4 +17,4 @@ const CrimeCategories = () => {
   );
 };
 
-export default CrimeCategories;
+export default TotalCrimes;
