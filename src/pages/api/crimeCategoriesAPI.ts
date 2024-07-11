@@ -1,6 +1,6 @@
-// src/pages/api/crimeCategoriesAPI.ts
 
 import { NextApiRequest, NextApiResponse } from "next";
+import { ApiResponseProps } from "../../../types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,12 +17,12 @@ export default async function handler(
       return;
     }
 
-    const data = await response.json();
+    const data: ApiResponseProps = await response.json();
     res.status(200).json(data);
-  } catch (error) {
-    console.error("Fetch error:", error.message);
+  } catch (err) {
+    console.error("Fetch error:", (err as Error).message);
     res
       .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+      .json({ message: "Internal Server Error", error: (err as Error).message });
   }
 }

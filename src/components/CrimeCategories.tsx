@@ -1,32 +1,18 @@
-// components/CrimeCategories.tsx
-
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { fetchData } from "../../utils";
-
-const CRIMES_URL =
-  "https://geoserver22s.zgis.at/geoserver/IPSDI_WT23/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=IPSDI_WT23%3Achicago_crimes&maxFeatures=50&outputFormat=application%2Fjson";
+import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 const CrimeCategories = () => {
+  
+  const { crimeCategories } = useCrimeContext();
 
-  const [crimeCategories, setCrimeCategories] = useState()
-  // fetch boundaries data
-  useEffect(() => {
-    const getCrimedata = async () => {
-      try {
-        const data = await fetchData(CRIMES_URL);
-        setCrimeCategories(data);
-      } catch (error) {
-        console.error("Error fetching boundaries:", error);
-      }
-    };
-    getCrimedata();
-  }, []);
+  if (!crimeCategories) return null;
+
+  const totalCrimes = crimeCategories.totalFeatures;
 
   return (
     <div>
-      <pre>{JSON.stringify(crimeCategories, null, 2)}</pre>
+      <p>Total Crimes: {totalCrimes}</p>
     </div>
   );
 };
