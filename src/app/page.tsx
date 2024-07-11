@@ -2,8 +2,24 @@
 
 import CrimeFilterForm from "@/components/CrimeFilterForm";
 import { MapComponent } from "../components";
+import CrimeCategories from "@/components/CrimeCategories";
 
 export default function Home() {
+  // async function fetchCrimeCategories() {
+  //   const response = await fetch("/api/crimeCategoriesAPI", {
+  //     next: { revalidate: 60 },
+  //   });
+
+  //   if (!response.ok) {
+  //     throw new Error("Failed to fetch data");
+  //   }
+
+  //   const data = await response.json();
+  //   return data;
+  // }
+
+  // const data = fetchCrimeCategories()
+
   return (
     <main>
       <div className="flex">
@@ -25,7 +41,8 @@ export default function Home() {
           </nav>
 
           <div>
-            <CrimeFilterForm/>
+            <CrimeFilterForm />
+            <CrimeCategories />
           </div>
         </div>
       </div>

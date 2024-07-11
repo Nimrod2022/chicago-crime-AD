@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
+    "@tanstack/react-query": "^5.51.1",
+    "@tanstack/react-query-devtools": "^5.51.1",
+    "axios": "^1.7.2",
     "https": "^1.0.0",
     "install": "^0.13.0",
     "next": "14.2.4",
@@ -21,7 +24,8 @@
     "ol-popup": "^5.1.1",
     "react": "^18",
     "react-dom": "^18",
-    "stream-json": "^1.8.0"
+    "stream-json": "^1.8.0",
+    "undici": "^6.19.2"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -4,9 +4,9 @@ import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 function CrimeFilterForm() {
   const [currentYear, setCurrentYear] = useState<number>(availableYears[0]);
   const [currentCity, setCurrentCity] = useState<string>(chicagoDistricts[0]);
-  const [currentCrimeType, setCurrentCrimeType] = useState<string>(
-    crimeTypes[0]
-  );
+  // const [currentCrimeType, setCurrentCrimeType] = useState<string>(
+  //   crimeTypes[0]
+  // );
 
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -49,8 +49,8 @@ function CrimeFilterForm() {
           </select>
         </div>
 
-        <div>
-          {/* <label htmlFor="district-select">District</label> */}
+        {/* <div>
+          <label htmlFor="district-select">District</label>
           <select
             name="crime-type"
             id="crime-type-select"
@@ -63,7 +63,7 @@ function CrimeFilterForm() {
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
 
         <button type="submit">Filter</button>
       </form>
