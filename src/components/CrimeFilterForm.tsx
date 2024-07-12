@@ -4,21 +4,30 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import { useEffect } from "react";
 
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { CiLocationOn } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import {  FormEvent, useState } from "react";
 import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 function CrimeFilterForm() {
-  const { getFilteredData, currentYear, setCurrentYear } = useCrimeContext();
+  const { getFilteredData, currentYear, setCurrentYear, selectedDistrict } =
+    useCrimeContext();
 
   const [currentDistrict, setCurrentDistrict] = useState<string>(
     chicagoDistricts[0]
   );
+
+  // Update local state when selectedDistrict changes in the context
+  useEffect(() => {
+    if (selectedDistrict) {
+      setCurrentDistrict(selectedDistrict);
+    }
+  }, [selectedDistrict]);
 
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -32,7 +41,6 @@ function CrimeFilterForm() {
         <div className="">
           <Listbox value={currentYear} onChange={setCurrentYear}>
             <ListboxButton className="year__button">
-              {/* <SlCalender className="text-[#7879F1] size-4" /> */}
               {currentYear}
               <ChevronDownIcon
                 className="  size-7 fill-[#7879F1]"

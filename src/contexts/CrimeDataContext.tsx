@@ -29,7 +29,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
     const [currentYear, setCurrentYear] = useState<number>(2019);
 
 
@@ -64,7 +64,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     }
   }
 
-  const setDistrictFilter = (district: string) => {
+  const setDistrictFilterMap = (district: string) => {
     setSelectedDistrict(district);
     getFilteredData(currentYear, district);
   };
@@ -73,7 +73,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
 
   return (
     <CrimeContext.Provider
-      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear }}
+      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear, setDistrictFilterMap, selectedDistrict }}
     >
       {children}
     </CrimeContext.Provider>

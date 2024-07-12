@@ -14,19 +14,24 @@ import Style from "ol/style/Style";
 import Stroke from "ol/style/Stroke";
 import Fill from "ol/style/Fill";
 import Overlay from "ol/Overlay";
-import { BoundaryDataProps } from "../../types";
+import Feature from "ol/Feature";
 
-// constants
+import { useCrimeContext } from "@/contexts/CrimeDataContext";
+import { Geometry } from "ol/geom";
 
 const BOUNDARIES_URL =
   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/boundaries.geojson";
-
-
 
 function MapComponent() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
+  const [map, setMap] = useState<Map | null>(null);
+  const [vectorLayer, setVectorLayer] = useState<VectorLayer | null>(null);
+  const [selectedFeature, setSelectedFeature] =
+    useState<Feature<Geometry> | null>(null);
+  const { setDistrictFilterMap } =
+    useCrimeContext();
 
   // fetch boundaries data
   useEffect(() => {
@@ -61,6 +66,7 @@ function MapComponent() {
           }),
         }),
       });
+
       // Initialize map
       const map = new Map({
         target: mapContainer.current,
@@ -83,6 +89,7 @@ function MapComponent() {
         autoPan: true,
       });
       map.addOverlay(overlay);
+
       // Show district name on mouse hover
 
       map.on("pointermove", function (evt) {
@@ -98,6 +105,36 @@ function MapComponent() {
           overlay.setPosition(undefined);
         }
       });
+
+      // Highlight district on click
+
+      let selectedFeature: Feature<Geometry> | null = null;
+
+      const selectedStyle = new Style({
+        fill: new Fill({
+          color: "#3615FF",
+        }),
+      });
+
+      map.on("singleclick", function (evt) {
+        if (map.hasFeatureAtPixel(evt.pixel)) {
+          const feature = map.getFeaturesAtPixel(
+            evt.pixel
+          )[0] as Feature<Geometry>;
+          const districtName = feature.get("pri_neigh");
+
+          // Set the district filter in the context
+          setDistrictFilterMap(districtName);
+
+          // Highlight the selected feature
+          if (selectedFeature) {
+            selectedFeature.setStyle(undefined);
+          }
+          feature.setStyle(selectedStyle);
+          selectedFeature = feature;
+        }
+      });
+
       // Clean-up function
       return () => {
         map.setTarget(undefined);
