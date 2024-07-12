@@ -81,4 +81,6 @@ export interface CrimeContextProps {
   setCurrentYear: (year: number)=>void
   setDistrictFilterMap: (district: string)=> void
   selectedDistrict: string
+  currentDistrict: string
+  setCurrentDistrict: (district: string) => void
 }

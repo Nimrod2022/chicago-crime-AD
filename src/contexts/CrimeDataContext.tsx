@@ -31,6 +31,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
     const [currentYear, setCurrentYear] = useState<number>(2019);
+    const [currentDistrict, setCurrentDistrict] =
+      useState<string>("Albany Park");
 
 
   useEffect(() => {
@@ -52,20 +54,21 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   // Filter data
 
   function getFilteredData(year: number, district: string) {
+    setCurrentYear(year);
+    setSelectedDistrict(district);
+      
     if (crimeData) {
-      const filteredData = crimeData.features.filter(
-        (crime) =>
-          crime.properties.year === year &&
-          crime.properties.district_name.trim().toLowerCase ===
-            district.trim().toLowerCase
+      const newData = crimeData.features.filter(crime =>
+        crime.properties.year === year &&
+        crime.properties.district_name.trim().toLowerCase() === district.trim().toLowerCase()
       );
-      console.log("Filtered data", filteredData);
-      setFilteredData(filteredData);
+      setFilteredData(newData);
     }
   }
 
   const setDistrictFilterMap = (district: string) => {
     setSelectedDistrict(district);
+    
     getFilteredData(currentYear, district);
   };
 
@@ -73,7 +76,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
 
   return (
     <CrimeContext.Provider
-      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear, setDistrictFilterMap, selectedDistrict }}
+      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear, setDistrictFilterMap, selectedDistrict, currentDistrict, setCurrentDistrict}}
     >
       {children}
     </CrimeContext.Provider>

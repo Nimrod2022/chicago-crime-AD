@@ -20,18 +20,14 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
 
 const BOUNDARIES_URL =
-  "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/boundaries.geojson";
+  "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago_boundaries.geojson";
 
 function MapComponent() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
-  const [map, setMap] = useState<Map | null>(null);
-  const [vectorLayer, setVectorLayer] = useState<VectorLayer | null>(null);
-  const [selectedFeature, setSelectedFeature] =
-    useState<Feature<Geometry> | null>(null);
-  const { setDistrictFilterMap } =
-    useCrimeContext();
+
+  const { setDistrictFilterMap } = useCrimeContext();
 
   // fetch boundaries data
   useEffect(() => {
@@ -77,8 +73,8 @@ function MapComponent() {
           vectorLayer,
         ],
         view: new View({
-          center: fromLonLat([-87.79585343500183, 41.851812904278674]),
-          zoom: 11,
+          center: fromLonLat([-87.71284816007186, 41.952044724238746]),
+          zoom: 11.5,
         }),
       });
 
@@ -95,7 +91,7 @@ function MapComponent() {
       map.on("pointermove", function (evt) {
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(evt.pixel)[0];
-          const districtName = feature.get("pri_neigh");
+          const districtName = feature.get("community");
           if (popupContainer.current) {
             overlay.setPosition(evt.coordinate);
             popupContainer.current.innerHTML = districtName;

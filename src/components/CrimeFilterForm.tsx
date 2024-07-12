@@ -15,19 +15,18 @@ import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 function CrimeFilterForm() {
-  const { getFilteredData, currentYear, setCurrentYear, selectedDistrict } =
+  const { getFilteredData, currentYear, setCurrentYear, currentDistrict, setCurrentDistrict,  selectedDistrict } =
     useCrimeContext();
 
-  const [currentDistrict, setCurrentDistrict] = useState<string>(
-    chicagoDistricts[0]
-  );
+  
 
   // Update local state when selectedDistrict changes in the context
   useEffect(() => {
     if (selectedDistrict) {
       setCurrentDistrict(selectedDistrict);
+      getFilteredData(currentYear, currentDistrict);
     }
-  }, [selectedDistrict]);
+  }, []);
 
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
