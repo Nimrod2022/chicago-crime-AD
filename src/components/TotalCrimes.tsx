@@ -4,6 +4,7 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 const TotalCrimes = () => {
   const { filteredData } = useCrimeContext();
+ 
 
   return (
     <div>

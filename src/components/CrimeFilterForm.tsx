@@ -26,7 +26,7 @@ function CrimeFilterForm() {
       setCurrentDistrict(selectedDistrict);
       getFilteredData(currentYear, currentDistrict);
     }
-  }, []);
+  }, [selectedDistrict]);
 
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {

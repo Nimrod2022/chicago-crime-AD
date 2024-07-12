@@ -30,10 +30,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-    const [currentYear, setCurrentYear] = useState<number>(2019);
-    const [currentDistrict, setCurrentDistrict] =
-      useState<string>("Albany Park");
-
+  const [currentYear, setCurrentYear] = useState<number>(2019);
+  const [currentDistrict, setCurrentDistrict] = useState<string>("Albany Park");
 
   useEffect(() => {
     const getCrimeData = async () => {
@@ -56,27 +54,56 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   function getFilteredData(year: number, district: string) {
     setCurrentYear(year);
     setSelectedDistrict(district);
-      
-    if (crimeData) {
-      const newData = crimeData.features.filter(crime =>
-        crime.properties.year === year &&
-        crime.properties.district_name.trim().toLowerCase() === district.trim().toLowerCase()
+
+    if (crimeData && district) {
+      const newData = crimeData.features.filter(
+        (crime) =>
+          crime.properties.year === year &&
+          crime.properties.district_name.trim().toLowerCase() ===
+            district.trim().toLowerCase()
       );
       setFilteredData(newData);
     }
   }
 
+  function toTitleCase(str: string) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map(function (word: string) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  }
+
   const setDistrictFilterMap = (district: string) => {
-    setSelectedDistrict(district);
-    
-    getFilteredData(currentYear, district);
+    const formattedName = toTitleCase(district);
+
+    if (formattedName !== currentDistrict) {
+      setCurrentDistrict(formattedName);
+      setSelectedDistrict(formattedName);
+
+      getFilteredData(currentYear, formattedName);
+    }
   };
 
   // console.log("Crime Data", crimeData)
 
   return (
     <CrimeContext.Provider
-      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear, setDistrictFilterMap, selectedDistrict, currentDistrict, setCurrentDistrict}}
+      value={{
+        crimeData,
+        loading,
+        error,
+        getFilteredData,
+        filteredData,
+        currentYear,
+        setCurrentYear,
+        setDistrictFilterMap,
+        selectedDistrict,
+        currentDistrict,
+        setCurrentDistrict,
+      }}
     >
       {children}
     </CrimeContext.Provider>
