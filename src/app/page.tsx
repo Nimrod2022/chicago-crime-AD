@@ -13,7 +13,7 @@ export default function Home() {
           <MapComponent />
         </div>
 
-        <div className="w-[40%]">
+        <div className="w-[50%]">
           <nav className="w-full ">
             <div className="flex justify-between px-5 py-3 shadow-md">
               <h1 className="md:text-xl font-semibold flex text-[#3615FF] items-center gap-x-1.5">
