@@ -21,8 +21,7 @@ import { BoundaryDataProps } from "../../types";
 const BOUNDARIES_URL =
   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/boundaries.geojson";
 
-// const CRIMES_URL =
-//   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/crime_data.geojson";
+
 
 function MapComponent() {
   const mapContainer = useRef<HTMLDivElement>(null);

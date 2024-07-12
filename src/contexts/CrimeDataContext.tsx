@@ -26,9 +26,12 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   const [crimeData, setCrimeData] = useState<ApiResponseProps | null>(null);
   const [filteredData, setFilteredData] = useState<CrimeFeatureProps[] | null>(
     null
-  ); 
+  );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
+    const [currentYear, setCurrentYear] = useState<number>(2019);
+
 
   useEffect(() => {
     const getCrimeData = async () => {
@@ -46,23 +49,31 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
+  // Filter data
+
   function getFilteredData(year: number, district: string) {
     if (crimeData) {
       const filteredData = crimeData.features.filter(
         (crime) =>
           crime.properties.year === year &&
-          crime.properties.district_name.trim().toLowerCase === district.trim().toLowerCase
+          crime.properties.district_name.trim().toLowerCase ===
+            district.trim().toLowerCase
       );
-      console.log("Filtered data", filteredData)
+      console.log("Filtered data", filteredData);
       setFilteredData(filteredData);
     }
   }
 
-// console.log("Crime Data", crimeData)
+  const setDistrictFilter = (district: string) => {
+    setSelectedDistrict(district);
+    getFilteredData(currentYear, district);
+  };
+
+  // console.log("Crime Data", crimeData)
 
   return (
     <CrimeContext.Provider
-      value={{ crimeData, loading, error, getFilteredData, filteredData }}
+      value={{ crimeData, loading, error, getFilteredData, filteredData, currentYear, setCurrentYear }}
     >
       {children}
     </CrimeContext.Provider>

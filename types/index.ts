@@ -77,4 +77,6 @@ export interface CrimeContextProps {
   loading: boolean;
   error: string | null;
   getFilteredData: (year:number, district: string) => void
+  currentYear: number
+  setCurrentYear: (year: number)=>void
 }

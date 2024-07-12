@@ -1,78 +1,91 @@
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
+
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { CiLocationOn } from "react-icons/ci";
+import { SlCalender } from "react-icons/sl";
+
 import { ChangeEvent, FormEvent, useState } from "react";
 import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 function CrimeFilterForm() {
+  const { getFilteredData, currentYear, setCurrentYear } = useCrimeContext();
 
-  const {getFilteredData} = useCrimeContext()
-
-  
-  const [currentYear, setCurrentYear] = useState<number>(availableYears[0]);
-  const [currentDistrict, setCurrentDistrict] = useState<string>(chicagoDistricts[0]);
-  // const [currentCrimeType, setCurrentCrimeType] = useState<string>(
-  //   crimeTypes[0]
-  // );
+  const [currentDistrict, setCurrentDistrict] = useState<string>(
+    chicagoDistricts[0]
+  );
 
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    getFilteredData(currentYear, currentDistrict)
-    
+    getFilteredData(currentYear, currentDistrict);
   }
 
   return (
-    <div className="pt-5">
-      <form onSubmit={handleSubmit} className="flex gap-x-2">
-        <div>
-          {/* <label className="font-semibold text-xl" htmlFor="year-select">
-            Year:
-          </label> */}
-          <select
-            id="year-select"
-            name="year"
-            onChange={(e) => setCurrentYear(parseInt(e.target.value))}
-            value={currentYear}
-          >
-            {availableYears.map((year) => (
-              <option value={year} key={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+    <div className="pt-5 px-5 justify-center items-center flex">
+      <form onSubmit={handleSubmit} className="flex gap-x-10">
+        <div className="">
+          <Listbox value={currentYear} onChange={setCurrentYear}>
+            <ListboxButton className="year__button">
+              {/* <SlCalender className="text-[#7879F1] size-4" /> */}
+              {currentYear}
+              <ChevronDownIcon
+                className="  size-7 fill-[#7879F1]"
+                aria-hidden="true"
+              />
+            </ListboxButton>
+
+            <ListboxOptions anchor="bottom" transition>
+              {availableYears.map((year) => (
+                <ListboxOption
+                  value={year}
+                  key={year}
+                  className="filter__options group"
+                >
+                  <CheckIcon className="check__icon" />
+
+                  {year}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
+          </Listbox>
         </div>
-        <div>
-          {/* <label htmlFor="district-select">District</label> */}
-          <select
-            name="district"
-            id="district-select"
-            onChange={(e) => setCurrentDistrict(e.target.value)}
-            value={currentDistrict}
-          >
+
+        <Listbox value={currentDistrict} onChange={setCurrentDistrict}>
+          <ListboxButton className="district__button">
+            <CiLocationOn className="text-[#7879F1] size-5" />
+
+            {currentDistrict}
+            <ChevronDownIcon
+              className="  size-7 fill-[#7879F1]"
+              aria-hidden="true"
+            />
+          </ListboxButton>
+          <ListboxOptions anchor="bottom">
             {chicagoDistricts.map((district, index) => (
-              <option key={index} value={district}>
+              <ListboxOption
+                key={index}
+                value={district}
+                className="filter__options group"
+              >
                 {district}
-              </option>
+                <CheckIcon className="check__icon" />
+              </ListboxOption>
             ))}
-          </select>
-        </div>
+          </ListboxOptions>
+        </Listbox>
 
-        {/* <div>
-          <label htmlFor="district-select">District</label>
-          <select
-            name="crime-type"
-            id="crime-type-select"
-            onChange={(e) => setCurrentCrimeType(e.target.value)}
-            value={currentCrimeType}
-          >
-            {crimeTypes.map((crime, index) => (
-              <option key={index} value={crime}>
-                {crime}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
-        <button type="submit">Filter</button>
+        <button
+          className="text-white w-[115px] h-[45px] px-5 py-2 bg-[#7879F1] rounded-xl"
+          type="submit"
+        >
+          Filter
+        </button>
       </form>
     </div>
   );
