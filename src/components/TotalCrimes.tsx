@@ -4,15 +4,13 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 const TotalCrimes = () => {
   
-  const { crimeCategories } = useCrimeContext();
+  const { filteredData } = useCrimeContext();
 
-  if (!crimeCategories) return null;
-
-  const totalCrimes = crimeCategories.totalFeatures;
+  
 
   return (
     <div>
-      <p>Total Crimes: {totalCrimes}</p>
+      <p>Total Crimes: {filteredData? filteredData.length : 0}</p>
     </div>
   );
 };

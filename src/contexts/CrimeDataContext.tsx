@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, {
   createContext,
@@ -8,7 +8,11 @@ import React, {
   ReactNode,
 } from "react";
 import { fetchData } from "../../utils";
-import { ApiResponseProps, CrimeContextProps } from "../../types";
+import {
+  ApiResponseProps,
+  CrimeContextProps,
+  CrimeFeatureProps,
+} from "../../types";
 
 // Context
 const CrimeContext = createContext<CrimeContextProps | undefined>(undefined);
@@ -19,8 +23,10 @@ interface CrimeProviderProps {
 }
 
 export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
-  const [crimeCategories, setCrimeCategories] =
-    useState<ApiResponseProps | null>(null);
+  const [crimeData, setCrimeData] = useState<ApiResponseProps | null>(null);
+  const [filteredData, setFilteredData] = useState<CrimeFeatureProps[] | null>(
+    null
+  ); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,9 +34,9 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     const getCrimeData = async () => {
       try {
         const data: ApiResponseProps = await fetchData(
-          "https://geoserver22s.zgis.at/geoserver/IPSDI_WT23/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=IPSDI_WT23%3Achicago_crimes&maxFeatures=50&outputFormat=application%2Fjson"
+          "https://geoserver22s.zgis.at/geoserver/IPSDI_WT23/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=IPSDI_WT23%3Achicago_crimes&maxFeatures=100000&outputFormat=application%2Fjson"
         );
-        setCrimeCategories(data);
+        setCrimeData(data);
         setLoading(false);
       } catch (err) {
         setError((err as Error).message || "An unknown error occurred");
@@ -40,14 +46,30 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
+  function getFilteredData(year: number, district: string) {
+    if (crimeData) {
+      const filteredData = crimeData.features.filter(
+        (crime) =>
+          crime.properties.year === year &&
+          crime.properties.district_name.trim().toLowerCase === district.trim().toLowerCase
+      );
+      console.log("Filtered data", filteredData)
+      setFilteredData(filteredData);
+    }
+  }
+
+// console.log("Crime Data", crimeData)
+
   return (
-    <CrimeContext.Provider value={{ crimeCategories, loading, error }}>
+    <CrimeContext.Provider
+      value={{ crimeData, loading, error, getFilteredData, filteredData }}
+    >
       {children}
     </CrimeContext.Provider>
   );
 };
 
-// Create a custom hook for easy context consumption
+// Hook for easy context consumption
 export const useCrimeContext = (): CrimeContextProps => {
   const context = useContext(CrimeContext);
   if (context === undefined) {

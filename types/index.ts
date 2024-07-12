@@ -36,7 +36,7 @@ interface CrimePropertiesProps {
 }
 
 // Define the shape of each crime feature
-interface CrimeFeature {
+export interface CrimeFeatureProps {
   type: string;
   id: string;
   geometry: {
@@ -50,13 +50,13 @@ interface CrimeFeature {
 // Define the shape of the API response
 interface ApiResponse {
   type: string;
-  features: CrimeFeature[];
+  features: CrimeFeatureProps[];
 }
 
 // Define the shape of the API response
 export interface ApiResponseProps {
   type: string;
-  features: CrimeFeature[];
+  features: CrimeFeatureProps[];
   totalFeatures: number;
   numberMatched: number;
   numberReturned: number;
@@ -72,7 +72,9 @@ export interface ApiResponseProps {
 
 // Define the context type
 export interface CrimeContextProps {
-  crimeCategories: ApiResponseProps | null;
+  crimeData: ApiResponseProps | null;
+  filteredData: CrimeFeatureProps[] | null
   loading: boolean;
   error: string | null;
+  getFilteredData: (year:number, district: string) => void
 }

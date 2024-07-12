@@ -1,9 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
+import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 function CrimeFilterForm() {
+
+  const {getFilteredData} = useCrimeContext()
+
+  
   const [currentYear, setCurrentYear] = useState<number>(availableYears[0]);
-  const [currentCity, setCurrentCity] = useState<string>(chicagoDistricts[0]);
+  const [currentDistrict, setCurrentDistrict] = useState<string>(chicagoDistricts[0]);
   // const [currentCrimeType, setCurrentCrimeType] = useState<string>(
   //   crimeTypes[0]
   // );
@@ -11,6 +16,8 @@ function CrimeFilterForm() {
   //   Handle form submission
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    getFilteredData(currentYear, currentDistrict)
+    
   }
 
   return (
@@ -38,8 +45,8 @@ function CrimeFilterForm() {
           <select
             name="district"
             id="district-select"
-            onChange={(e) => setCurrentCity(e.target.value)}
-            value={currentCity}
+            onChange={(e) => setCurrentDistrict(e.target.value)}
+            value={currentDistrict}
           >
             {chicagoDistricts.map((district, index) => (
               <option key={index} value={district}>
