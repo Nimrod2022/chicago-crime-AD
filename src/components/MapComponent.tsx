@@ -115,9 +115,7 @@ function MapComponent() {
       // Clean-up function
       return () => {
         map.setTarget(undefined);
-        vectorSource.clear();
-        map.removeOverlay(overlay); // Remove the overlay from the map
-        map.getLayers().forEach((layer) => map.removeLayer(layer));
+        
       };
     }
   }, [boundaries]);
