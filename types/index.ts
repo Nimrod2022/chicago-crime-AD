@@ -47,11 +47,11 @@ export interface CrimeFeatureProps {
   properties: CrimePropertiesProps;
 }
 
-// Define the shape of the API response
-interface ApiResponse {
-  type: string;
-  features: CrimeFeatureProps[];
-}
+// // Define the shape of the API response
+// interface ApiResponse {
+//   type: string;
+//   features: CrimeFeatureProps[];
+// }
 
 // Define the shape of the API response
 export interface ApiResponseProps {
@@ -73,14 +73,15 @@ export interface ApiResponseProps {
 // Define the context type
 export interface CrimeContextProps {
   crimeData: ApiResponseProps | null;
-  filteredData: CrimeFeatureProps[] | null
+  filteredData: CrimeFeatureProps[] | null;
   loading: boolean;
   error: string | null;
-  getFilteredData: (year:number, district: string) => void
-  currentYear: number
-  setCurrentYear: (year: number)=>void
-  setDistrictFilterMap: (district: string)=> void
-  selectedDistrict: string
-  currentDistrict: string
-  setCurrentDistrict: (district: string) => void
+  getFilteredData: (year: number, district: string) => void;
+  currentYear: number;
+  setCurrentYear: (year: number) => void;
+  // setDistrictFilterMap: (district: string) => void;
+  selectedDistrict: string;
+  currentDistrict: string;
+  setCurrentDistrict: (district: string) => void;
+  toTitleCase: (district: string) => void;
 }

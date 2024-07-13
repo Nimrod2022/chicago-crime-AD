@@ -15,32 +15,34 @@ import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 function CrimeFilterForm() {
-  const { getFilteredData, currentYear, setCurrentYear, currentDistrict, setCurrentDistrict,  selectedDistrict } =
-    useCrimeContext();
+  const {
+    getFilteredData,
+    currentYear,
+    setCurrentYear,
+    currentDistrict,
+    setCurrentDistrict,
+    selectedDistrict,
+  } = useCrimeContext();
 
-  
+  // Local state for the form
+  const [year, setYear] = useState(currentYear);
+  const [district, setDistrict] = useState(currentDistrict);
 
-  // Update local state when selectedDistrict changes in the context
-  useEffect(() => {
-    if (selectedDistrict) {
-      setCurrentDistrict(selectedDistrict);
-      getFilteredData(currentYear, currentDistrict);
-    }
-  }, [selectedDistrict]);
-
-  //   Handle form submission
+ 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    getFilteredData(currentYear, currentDistrict);
+    setCurrentYear(year);
+    setCurrentDistrict(district);
+    getFilteredData(year, district);
   }
 
   return (
     <div className="pt-5 px-5 justify-center items-center flex">
       <form onSubmit={handleSubmit} className="flex gap-x-10">
         <div className="">
-          <Listbox value={currentYear} onChange={setCurrentYear}>
+          <Listbox value={year} onChange={setYear}>
             <ListboxButton className="year__button">
-              {currentYear}
+              {year}
               <ChevronDownIcon
                 className="  size-7 fill-[#7879F1]"
                 aria-hidden="true"
@@ -63,11 +65,11 @@ function CrimeFilterForm() {
           </Listbox>
         </div>
 
-        <Listbox value={currentDistrict} onChange={setCurrentDistrict}>
+        <Listbox value={district} onChange={setDistrict}>
           <ListboxButton className="district__button">
             <CiLocationOn className="text-[#7879F1] size-5" />
 
-            {currentDistrict}
+            {district}
             <ChevronDownIcon
               className="  size-7 fill-[#7879F1]"
               aria-hidden="true"

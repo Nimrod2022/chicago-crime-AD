@@ -30,8 +30,9 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [currentYear, setCurrentYear] = useState<number>(2019);
-  const [currentDistrict, setCurrentDistrict] = useState<string>("Albany Park");
+  const [currentYear, setCurrentYear] = useState<number>(2023);
+  const [currentDistrict, setCurrentDistrict] =
+    useState<string>("Select District");
 
   useEffect(() => {
     const getCrimeData = async () => {
@@ -66,6 +67,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     }
   }
 
+  // console.log(filteredData)
+  // Formating district name from map click to form
   function toTitleCase(str: string) {
     return str
       .toLowerCase()
@@ -76,18 +79,10 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       .join(" ");
   }
 
-  const setDistrictFilterMap = (district: string) => {
-    const formattedName = toTitleCase(district);
 
-    if (formattedName !== currentDistrict) {
-      setCurrentDistrict(formattedName);
-      setSelectedDistrict(formattedName);
 
-      getFilteredData(currentYear, formattedName);
-    }
-  };
 
-  // console.log("Crime Data", crimeData)
+
 
   return (
     <CrimeContext.Provider
@@ -99,10 +94,10 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
         filteredData,
         currentYear,
         setCurrentYear,
-        setDistrictFilterMap,
         selectedDistrict,
         currentDistrict,
         setCurrentDistrict,
+        toTitleCase,
       }}
     >
       {children}
@@ -110,7 +105,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   );
 };
 
-// Hook for easy context consumption
+// Hook for  context consumption
 export const useCrimeContext = (): CrimeContextProps => {
   const context = useContext(CrimeContext);
   if (context === undefined) {

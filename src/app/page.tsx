@@ -1,8 +1,9 @@
 "use client";
 
 import CrimeFilterForm from "@/components/CrimeFilterForm";
-import { MapComponent } from "../components";
+import MapComponent from "@/components/MapComponent";
 import TotalCrimes from "@/components/TotalCrimes";
+import { TotalCrimesChart } from "@/components/TotalCrimesCharts";
 import Image from "next/image";
 
 export default function Home() {
@@ -37,6 +38,11 @@ export default function Home() {
           <div>
             <CrimeFilterForm />
             <TotalCrimes />
+
+          </div>
+
+          <div>
+            <TotalCrimesChart/>
           </div>
         </div>
       </div>
