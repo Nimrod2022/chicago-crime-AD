@@ -85,3 +85,21 @@ export interface CrimeContextProps {
   setCurrentDistrict: (district: string) => void;
   toTitleCase: (district: string) => void;
 }
+
+export interface ChartDataType {
+  type: string;
+  Count: number;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

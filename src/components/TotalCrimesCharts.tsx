@@ -1,10 +1,17 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChartDataType } from "../../types";
 
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -19,38 +26,65 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+
+// const chartData = [
+//   { month: "January", desktop: 186 },
+//   { month: "February", desktop: 305 },
+//   { month: "March", desktop: 237 },
+//   { month: "April", desktop: 73 },
+//   { month: "May", desktop: 209 },
+//   { month: "June", desktop: 214 },
+// ];
 
 const chartConfig = {
   desktop: {
     label: "Desktop",
     color: "hsl(var(--chart-1))",
   },
+  mobile: {
+    label: "Mobile",
+    color: "hsl(var(--chart-2))",
+  },
+  label: {
+    color: "hsl(var(--background))",
+  },
 } satisfies ChartConfig;
 
 export function TotalCrimesChart() {
   const { currentYear, selectedDistrict, filteredData } = useCrimeContext();
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
 
-  useEffect(() => {
-    if (filteredData) {
-      const assaultCount = filteredData.filter(
+  //  Fetch crime category data
+  const getCrimeCount = (crimeType: string) => {
+    return (
+      filteredData?.filter(
         (feature) =>
-          feature.properties.type.toLowerCase() === "assault" &&
+          feature.properties.type.toLowerCase() === crimeType.toLowerCase() &&
           feature.properties.year === currentYear &&
           feature.properties.district_name.trim().toLowerCase() ===
             selectedDistrict.toLowerCase()
-      ).length;
+      ).length || 0
+    );
+  };
 
-      console.log("Number of assault cases:", assaultCount);
+  useEffect(() => {
+    if (filteredData) {
+      const assaultCount = getCrimeCount("assault");
+      const theftCount = getCrimeCount("battery");
+      const batteryCount = getCrimeCount("theft");
+      const burglaryCount = getCrimeCount("burglary");
+      const sexOffenseCount = getCrimeCount("sex offense");
+
+      // Update the chart data state
+      setChartData([
+        { type: "Assault", Count: assaultCount },
+        { type: "Battery", Count: batteryCount },
+        { type: "Theft", Count: theftCount },
+        { type: "Burglary", Count: burglaryCount },
+        { type: "Sex", Count: sexOffenseCount },
+      ]);
     }
-  }, [filteredData]); // Depend on relevant state only
+  }, [filteredData]);
 
   return (
     <Card>
@@ -67,23 +101,50 @@ export function TotalCrimesChart() {
             data={chartData}
             layout="vertical"
             margin={{
-              left: -20,
+              right: 16,
             }}
+
+           
+            
           >
-            <XAxis type="number" dataKey="desktop" hide />
+            <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="month"
+              dataKey="type"
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              hide
             />
+            <XAxis dataKey="Count" type="number" hide />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={5} />
+            <Bar
+              dataKey="Count"
+              layout="vertical"
+              fill="var(--color-desktop)"
+              radius={4}
+              barSize={40}
+              
+              
+            >
+              {/* <LabelList
+                dataKey="Count"
+                position="insideLeft"
+                offset={8}
+                className="fill-[--color-label]"
+                fontSize={12}
+              /> */}
+              <LabelList
+                dataKey="type"
+                position="right"
+                offset={8}
+                className="fill-foreground"
+                fontSize={12}
+              />
+            </Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>
