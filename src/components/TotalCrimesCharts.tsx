@@ -2,24 +2,13 @@
 
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { useEffect, useState } from "react";
-import { ChartDataType } from "../../types";
+import { TotalCrimesChartDataType } from "../../types";
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import * as React from "react";
+import { TrendingUp } from "lucide-react";
+import { Label, Pie, PieChart } from "recharts";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -27,32 +16,32 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-// const chartData = [
-//   { month: "January", desktop: 186 },
-//   { month: "February", desktop: 305 },
-//   { month: "March", desktop: 237 },
-//   { month: "April", desktop: 73 },
-//   { month: "May", desktop: 209 },
-//   { month: "June", desktop: 214 },
-// ];
-
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  Assault: {
+    label: "Assault",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  Battery: {
+    label: "Battery",
     color: "hsl(var(--chart-2))",
   },
-  label: {
-    color: "hsl(var(--background))",
+  Sex: {
+    label: "Sex Offense",
+    color: "hsl(var(--chart-3))",
+  },
+  Theft: {
+    label: "Theft",
+    color: "hsl(var(--chart-4))",
+  },
+  Burglary: {
+    label: "Burglary",
+    color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig;
 
 export function TotalCrimesChart() {
   const { currentYear, selectedDistrict, filteredData } = useCrimeContext();
-  const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const [chartData, setChartData] = useState<TotalCrimesChartDataType[]>([]);
 
   //  Fetch crime category data
   const getCrimeCount = (crimeType: string) => {
@@ -77,85 +66,77 @@ export function TotalCrimesChart() {
 
       // Update the chart data state
       setChartData([
-        { type: "Assault", Count: assaultCount },
-        { type: "Battery", Count: batteryCount },
-        { type: "Theft", Count: theftCount },
-        { type: "Burglary", Count: burglaryCount },
-        { type: "Sex", Count: sexOffenseCount },
+        { type: "Assault", Count: assaultCount, fill: "var(--color-Assault)" },
+        { type: "Battery", Count: batteryCount, fill: "var(--color-Battery)" },
+        { type: "Theft", Count: theftCount, fill: "var(--color-Theft)" },
+        {
+          type: "Burglary",
+          Count: burglaryCount,
+          fill: "var(--color-Burglary)",
+        },
+        { type: "Sex", Count: sexOffenseCount, fill: "var(--color-Sex)" },
       ]);
     }
   }, [filteredData]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-md">
-          Total Crimes Breakdown {currentYear}
-        </CardTitle>
-        {/* <CardDescription>{currentYear}</CardDescription> */}
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            layout="vertical"
-            margin={{
-              right: 16,
-            }}
-
-           
-            
+    <div className="w-[35%]">
+      <Card className="flex flex-col">
+        <CardHeader className="items-center pb-0">
+          <CardTitle className="text-md">{`Breakdown in ${selectedDistrict} - ${currentYear}`}</CardTitle>
+          {/* <CardDescription>January - June 2024</CardDescription> */}
+        </CardHeader>
+        <CardContent className="flex-1 pb-0">
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[250px]"
           >
-            <CartesianGrid horizontal={false} />
-            <YAxis
-              dataKey="type"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              hide
-            />
-            <XAxis dataKey="Count" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Bar
-              dataKey="Count"
-              layout="vertical"
-              fill="var(--color-desktop)"
-              radius={4}
-              barSize={40}
-              
-              
-            >
-              {/* <LabelList
-                dataKey="Count"
-                position="insideLeft"
-                offset={8}
-                className="fill-[--color-label]"
-                fontSize={12}
-              /> */}
-              <LabelList
-                dataKey="type"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
               />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-      {/* <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter> */}
-    </Card>
+              <Pie
+                data={chartData}
+                dataKey="Count"
+                nameKey="type"
+                innerRadius={60}
+                strokeWidth={5}
+              >
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                      return (
+                        <text
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                        >
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-foreground text-3xl font-bold"
+                          >
+                            {filteredData?.length.toLocaleString()}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Crimes
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

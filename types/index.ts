@@ -86,9 +86,10 @@ export interface CrimeContextProps {
   toTitleCase: (district: string) => void;
 }
 
-export interface ChartDataType {
+export interface TotalCrimesChartDataType {
   type: string;
   Count: number;
+  fill: string
 }
 
 

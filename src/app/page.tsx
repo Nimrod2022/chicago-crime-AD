@@ -2,11 +2,16 @@
 
 import CrimeFilterForm from "@/components/CrimeFilterForm";
 import MapComponent from "@/components/MapComponent";
-import TotalCrimes from "@/components/TotalCrimes";
 import { TotalCrimesChart } from "@/components/TotalCrimesCharts";
 import Image from "next/image";
+import { useCrimeContext } from "@/contexts/CrimeDataContext";
+
+
+
 
 export default function Home() {
+
+  const {filteredData} = useCrimeContext()
   return (
     <main>
       <div className="flex">
@@ -37,13 +42,13 @@ export default function Home() {
 
           <div>
             <CrimeFilterForm />
-            <TotalCrimes />
-
           </div>
 
-          <div>
-            <TotalCrimesChart/>
-          </div>
+          {filteredData && (
+            <div>
+              <TotalCrimesChart />
+            </div>
+          )}
         </div>
       </div>
     </main>
