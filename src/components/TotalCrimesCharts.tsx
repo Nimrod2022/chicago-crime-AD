@@ -58,6 +58,8 @@ export function TotalCrimesChart() {
     );
   };
 
+  // console.log(filteredData)
+
   useEffect(() => {
     if (filteredData) {
       const assaultCount = getCrimeCount("assault");

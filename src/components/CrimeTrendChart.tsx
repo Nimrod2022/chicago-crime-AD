@@ -1,7 +1,16 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
 import {
@@ -18,18 +27,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useState } from "react";
-
-
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
+import { useEffect, useState } from "react";
+import { YearDataType } from "../../types";
 
 const chartConfig = {
   Assault: {
@@ -55,69 +54,124 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function CrimeTrendChart() {
-    const {filteredData} = useCrimeContext()
-    const [chartData, setChartData] = useState([])
+  const {  currentYear, crimeData, selectedDistrict } =
+    useCrimeContext();
+  const [chartData, setChartData] = useState<YearDataType[]>([]);
 
+  const getCrimeTrend = (crimeType: string, year: number) => {
+    return (
+      crimeData?.features?.filter(
+        (feature) =>
+          feature.properties.type.toLowerCase() === crimeType.toLowerCase() &&
+          feature.properties.year === year &&
+          feature.properties.district_name.trim().toLowerCase() ===
+            selectedDistrict.toLowerCase()
+      ).length || 0
+    );
+  };
 
+  useEffect(() => {
+    if (crimeData) {
+      // Data year list
+      const years = Array.from(
+        { length: currentYear - 2018 },
+        (_, i) => 2019 + i
+      );
+      const crimeTypes = [
+        "Assault",
+        "Battery",
+        "Theft",
+        "Burglary",
+        "Sex Offense",
+      ];
 
+      const data: YearDataType[] = years.map((year) => {
+        const yearData: YearDataType = {
+          year,
+          Assault: 0,
+          Battery: 0,
+          Theft: 0,
+          Burglary: 0,
+          SexOffense: 0,
+        };
+        crimeTypes.forEach((type) => {
+          yearData[type.replace(" ", "") as keyof YearDataType] = getCrimeTrend(
+            type,
+            year
+          );
+        });
 
+        return yearData;
+      });
 
-
+      setChartData(data);
+    }
+  }, [crimeData, currentYear, selectedDistrict]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              dataKey="desktop"
-              type="monotone"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="mobile"
-              type="monotone"
-              stroke="var(--color-mobile)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
-            </div>
-          </div>
-        </div>
-      </CardFooter>
-    </Card>
+    <div className="w-[50%] h-full">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-md">{`Trend: 2019 - ${currentYear}`}</CardTitle>
+          {/* <CardDescription>January - June 2024</CardDescription> */}
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig}>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart
+                data={chartData}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="Assault"
+                  stroke={chartConfig.Assault.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="Battery"
+                  stroke={chartConfig.Battery.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="Theft"
+                  stroke={chartConfig.Theft.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="Burglary"
+                  stroke={chartConfig.Burglary.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="SexOffense"
+                  stroke={chartConfig.Sex.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -92,6 +92,14 @@ export interface TotalCrimesChartDataType {
   fill: string
 }
 
+export interface YearDataType {
+  year: number;
+  Assault: number;
+  Battery: number;
+  Theft: number;
+  Burglary: number;
+  SexOffense: number;
+}
 
 
 
