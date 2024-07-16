@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { TotalCrimesChartDataType } from "../../types";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
-import { Label, Pie, PieChart } from "recharts";
+import { Label, Pie, PieChart, Legend } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -15,7 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent
+  ChartLegendContent,
 } from "@/components/ui/chart";
 
 const chartConfig = {
@@ -45,7 +44,7 @@ export function TotalCrimesChart() {
   const { currentYear, selectedDistrict, filteredData } = useCrimeContext();
   const [chartData, setChartData] = useState<TotalCrimesChartDataType[]>([]);
 
-  //  Fetch crime category data
+  //  Get crime category data
   const getCrimeCount = (crimeType: string) => {
     return (
       filteredData?.filter(
@@ -68,7 +67,6 @@ export function TotalCrimesChart() {
       const burglaryCount = getCrimeCount("burglary");
       const sexOffenseCount = getCrimeCount("sex offense");
 
-      // Update the chart data state
       setChartData([
         {
           type: "Assault",
@@ -96,7 +94,7 @@ export function TotalCrimesChart() {
   }, [filteredData]);
 
   return (
-    <div >
+    <div>
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle className="text-md">{`${selectedDistrict} - ${currentYear}`}</CardTitle>
@@ -153,6 +151,7 @@ export function TotalCrimesChart() {
                 content={<ChartLegendContent nameKey="type" />}
                 className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
               /> */}
+              <ChartLegend content={<ChartLegendContent />} />
             </PieChart>
           </ChartContainer>
         </CardContent>

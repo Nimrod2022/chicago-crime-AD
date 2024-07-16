@@ -54,8 +54,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function CrimeTrendChart() {
-  const {  currentYear, crimeData, selectedDistrict } =
-    useCrimeContext();
+  const { currentYear, crimeData, selectedDistrict } = useCrimeContext();
   const [chartData, setChartData] = useState<YearDataType[]>([]);
 
   const getCrimeTrend = (crimeType: string, year: number) => {
@@ -109,7 +108,7 @@ export function CrimeTrendChart() {
   }, [crimeData, currentYear, selectedDistrict]);
 
   return (
-    <div >
+    <div>
       <Card>
         <CardHeader>
           <CardTitle className="text-md">{`Trend: 2019 - ${currentYear}`}</CardTitle>
@@ -162,7 +161,7 @@ export function CrimeTrendChart() {
                 />
                 <Line
                   type="monotone"
-                  dataKey="SexOffense"
+                  dataKey="Sex Offense"
                   stroke={chartConfig.Sex.color}
                   strokeWidth={2}
                   dot={false}
