@@ -20,7 +20,7 @@ export default function Home() {
           </div>
 
           <div className="w-[50%] h-full">
-            <div className="h-[30%]">
+            <div className="h-[25%]">
               <nav className="w-full h-[50%]">
                 <div className="flex justify-between px-5 py-3 shadow-md h-full">
                   <h1 className="md:text-xl font-semibold flex text-[#3615FF] items-center gap-x-1.5">
