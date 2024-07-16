@@ -6,6 +6,7 @@ import { TotalCrimesChart } from "@/components/TotalCrimesCharts";
 import Image from "next/image";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { CrimeTrendChart } from "@/components/CrimeTrendChart";
+import { ArrestsBarChart } from "@/components/ArrestsBarChart";
 
 
 
@@ -46,11 +47,22 @@ export default function Home() {
           </div>
 
           {filteredData && (
-            <div>
-              <TotalCrimesChart />
-              <CrimeTrendChart/>
-            </div>
-            
+            <>
+              <div className="flex w-full pt-5">
+                <div className="w-[50%] h-full">
+                  <TotalCrimesChart />
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="w-[50%] h-full">
+                  <CrimeTrendChart />
+                </div>
+                <div className="w-[50%] h-full">
+                  <ArrestsBarChart />
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -96,7 +96,7 @@ export function TotalCrimesChart() {
   }, [filteredData]);
 
   return (
-    <div className="w-[35%]">
+    <div >
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle className="text-md">{`${selectedDistrict} - ${currentYear}`}</CardTitle>

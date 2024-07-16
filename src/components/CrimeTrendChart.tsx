@@ -109,7 +109,7 @@ export function CrimeTrendChart() {
   }, [crimeData, currentYear, selectedDistrict]);
 
   return (
-    <div className="w-[50%] h-full">
+    <div >
       <Card>
         <CardHeader>
           <CardTitle className="text-md">{`Trend: 2019 - ${currentYear}`}</CardTitle>

@@ -101,6 +101,14 @@ export interface YearDataType {
   SexOffense: number;
 }
 
+// types.ts
+export interface ArrestsDataType {
+  year: number;
+  Arrested: number;
+  NoArrest: number;
+}
+
+
 
 
 
