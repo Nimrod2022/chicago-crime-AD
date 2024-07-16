@@ -79,11 +79,6 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       .join(" ");
   }
 
-
-
-
-
-
   return (
     <CrimeContext.Provider
       value={{

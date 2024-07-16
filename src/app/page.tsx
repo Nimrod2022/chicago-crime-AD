@@ -5,6 +5,7 @@ import MapComponent from "@/components/MapComponent";
 import { TotalCrimesChart } from "@/components/TotalCrimesCharts";
 import Image from "next/image";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
+import { CrimeTrendChart } from "@/components/CrimeTrendChart";
 
 
 
@@ -47,7 +48,9 @@ export default function Home() {
           {filteredData && (
             <div>
               <TotalCrimesChart />
+              <CrimeTrendChart/>
             </div>
+            
           )}
         </div>
       </div>

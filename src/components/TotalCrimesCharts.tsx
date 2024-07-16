@@ -14,6 +14,8 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent
 } from "@/components/ui/chart";
 
 const chartConfig = {
@@ -66,15 +68,27 @@ export function TotalCrimesChart() {
 
       // Update the chart data state
       setChartData([
-        { type: "Assault", Count: assaultCount, fill: "var(--color-Assault)" },
-        { type: "Battery", Count: batteryCount, fill: "var(--color-Battery)" },
-        { type: "Theft", Count: theftCount, fill: "var(--color-Theft)" },
+        {
+          type: "Assault",
+          Count: assaultCount,
+          fill: chartConfig.Assault.color,
+        },
+        {
+          type: "Battery",
+          Count: batteryCount,
+          fill: chartConfig.Battery.color,
+        },
+        { type: "Theft", Count: theftCount, fill: chartConfig.Theft.color },
         {
           type: "Burglary",
           Count: burglaryCount,
-          fill: "var(--color-Burglary)",
+          fill: chartConfig.Burglary.color,
         },
-        { type: "Sex", Count: sexOffenseCount, fill: "var(--color-Sex)" },
+        {
+          type: "Sex Offense",
+          Count: sexOffenseCount,
+          fill: chartConfig.Sex.color,
+        },
       ]);
     }
   }, [filteredData]);
@@ -83,7 +97,7 @@ export function TotalCrimesChart() {
     <div className="w-[35%]">
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
-          <CardTitle className="text-md">{`Breakdown in ${selectedDistrict} - ${currentYear}`}</CardTitle>
+          <CardTitle className="text-md">{`${selectedDistrict} - ${currentYear}`}</CardTitle>
           {/* <CardDescription>January - June 2024</CardDescription> */}
         </CardHeader>
         <CardContent className="flex-1 pb-0">
@@ -133,6 +147,10 @@ export function TotalCrimesChart() {
                   }}
                 />
               </Pie>
+              {/* <ChartLegend
+                content={<ChartLegendContent nameKey="type" />}
+                className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+              /> */}
             </PieChart>
           </ChartContainer>
         </CardContent>

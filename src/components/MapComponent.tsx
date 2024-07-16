@@ -20,7 +20,7 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
 
 const BOUNDARIES_URL =
-  "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago_boundaries.geojson";
+  "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago.geojson";
 
 function MapComponent() {
   const mapContainer = useRef<HTMLDivElement>(null);
