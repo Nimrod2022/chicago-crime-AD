@@ -29,3 +29,27 @@ export const chicagoDistricts = [
 
 
 export const crimeTypes = ["Assault", "Battery", "Sex Offense", "Theft", "Burglary"]
+
+
+export const chartConfig = {
+  Assault: {
+    label: "Assault",
+    color: "hsl(var(--chart-1))",
+  },
+  Battery: {
+    label: "Battery",
+    color: "hsl(var(--chart-6))",
+  },
+  Sex: {
+    label: "Sex Offense",
+    color: "hsl(var(--chart-3))",
+  },
+  Theft: {
+    label: "Theft",
+    color: "hsl(var(--chart-4))",
+  },
+  Burglary: {
+    label: "Burglary",
+    color: "hsl(var(--chart-7))",
+  },
+} 

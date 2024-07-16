@@ -4,8 +4,9 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { useEffect, useState } from "react";
 import { TotalCrimesChartDataType } from "../../types";
 
+import { chartConfig } from "../../constants";
 import * as React from "react";
-import { Label, Pie, PieChart, Legend } from "recharts";
+import { Label, Pie, PieChart } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -17,28 +18,7 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 
-const chartConfig = {
-  Assault: {
-    label: "Assault",
-    color: "hsl(var(--chart-1))",
-  },
-  Battery: {
-    label: "Battery",
-    color: "hsl(var(--chart-2))",
-  },
-  Sex: {
-    label: "Sex Offense",
-    color: "hsl(var(--chart-3))",
-  },
-  Theft: {
-    label: "Theft",
-    color: "hsl(var(--chart-4))",
-  },
-  Burglary: {
-    label: "Burglary",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig;
+ chartConfig satisfies ChartConfig;
 
 export function TotalCrimesChart() {
   const { currentYear, selectedDistrict, filteredData } = useCrimeContext();
@@ -147,10 +127,7 @@ export function TotalCrimesChart() {
                   }}
                 />
               </Pie>
-              {/* <ChartLegend
-                content={<ChartLegendContent nameKey="type" />}
-                className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-              /> */}
+
               <ChartLegend content={<ChartLegendContent />} />
             </PieChart>
           </ChartContainer>

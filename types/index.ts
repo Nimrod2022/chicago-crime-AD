@@ -101,11 +101,18 @@ export interface YearDataType {
   SexOffense: number;
 }
 
-// types.ts
+// Arrest data type
 export interface ArrestsDataType {
   year: number;
   Arrested: number;
   NoArrest: number;
+}
+
+// Domestic chart data types
+export interface DomesticDataType {
+  year: number;
+  Domestic: number;
+  NotDomestic: number;
 }
 
 

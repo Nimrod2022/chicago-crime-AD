@@ -73,7 +73,7 @@ export function ArrestsBarChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-md">Crime Arrests Bar Chart</CardTitle>
+        <CardTitle className="text-md">{`Crime trend breakdown: 2019 - ${currentYear}`}</CardTitle>
         {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
