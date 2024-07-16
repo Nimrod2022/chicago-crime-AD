@@ -80,17 +80,19 @@ export function DomesticCrimesChart() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="text-md">Domestic Vs. None DOmestic Crimes</CardTitle>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
+        <CardTitle className="text-md">Domestic Vs. None domestic</CardTitle>
+        <CardDescription className="text-sm italic text-center px-5">
+          {`A breakdown of domestic and none domestic crimes in ${currentYear}.`}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[236px]"
         >
           <PieChart>
             <Tooltip content={<ChartTooltipContent nameKey="name" />} />
-            <Pie data={chartData} dataKey="value" nameKey="name" label>
+            <Pie data={chartData} dataKey="value" nameKey="name">
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fill} />
               ))}
@@ -103,7 +105,6 @@ export function DomesticCrimesChart() {
                 formatter={(value: string) => value}
               />
             </Pie>
-           
           </PieChart>
         </ChartContainer>
       </CardContent>

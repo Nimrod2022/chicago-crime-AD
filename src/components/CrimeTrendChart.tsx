@@ -91,8 +91,10 @@ export function CrimeTrendChart() {
     <div>
       <Card>
         <CardHeader>
-          <CardTitle className="text-md text-center">{`Crime trend breakdown: 2019 - ${currentYear}`}</CardTitle>
-          {/* <CardDescription>{`Crime trend: 2019 - ${currentYear}`}</CardDescription> */}
+          <CardTitle className="text-md items-center text-center flex gap-x-1 justify-center">
+            {`Crime Trend`} <TrendingUp className="h-4 w-4 text-[#7879f0]" />
+          </CardTitle>
+          <CardDescription className="text-sm  italic text-center px-10">{`Trend of each crime over time from 2019 - ${currentYear}.`}</CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig}>

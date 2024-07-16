@@ -8,7 +8,7 @@ import { chartConfig } from "../../constants";
 import * as React from "react";
 import { Label, Pie, PieChart } from "recharts";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -45,7 +45,7 @@ export function TotalCrimesChart() {
       const theftCount = getCrimeCount("battery");
       const batteryCount = getCrimeCount("theft");
       const burglaryCount = getCrimeCount("burglary");
-      const sexOffenseCount = getCrimeCount("sex offense");
+      const sexOffenseCount = getCrimeCount("sex Offense");
 
       setChartData([
         {
@@ -73,12 +73,16 @@ export function TotalCrimesChart() {
     }
   }, [filteredData]);
 
+  console.log("total crims,", chartData)
+
   return (
     <div>
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
-          <CardTitle className="text-md">{`${selectedDistrict} - ${currentYear}`}</CardTitle>
-          {/* <CardDescription>January - June 2024</CardDescription> */}
+          <CardTitle className="text-md ">{`Total Crimes Breakdown`}</CardTitle>
+          <CardDescription className="text-center italic text-sm w-[80%]">
+            {`A breakdown of total crimes committed in ${selectedDistrict} for ${currentYear}.`}
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <ChartContainer

@@ -46,24 +46,26 @@ export default function Home() {
 
             <div className="h-[70%]">
               {filteredData && (
-                <div className="h-full">
-                  <div className="flex w-full pt-5 h-1/2">
-                    <div className="w-[50%] h-full">
+                <div className="h-full pt-5">
+                  <div className="flex w-full pt-5 h-1/2 ">
+                    <div className="w-[50%] h-full border-r-2 border-t-2 ">
                       <TotalCrimesChart />
                     </div>
 
-                    <div className="w-[50%] h-full">
+                    <div className="w-[50%] border-t-2 h-full">
                       <ArrestsBarChart />
                     </div>
                   </div>
+                  <hr />
                   <div className="flex h-1/2">
-                    <div className="w-[50%] h-full">
+                    <div className="w-[50%] border-r-2 border-b-2  h-full">
                       <CrimeTrendChart />
                     </div>
-                    <div className="w-[50%] h-full">
+                    <div className="w-[50%] border-b-2  h-full">
                       <DomesticCrimesChart />
                     </div>
                   </div>
+               
                 </div>
               )}
             </div>

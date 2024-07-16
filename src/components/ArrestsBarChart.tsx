@@ -13,7 +13,7 @@ import {
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { useState, useEffect } from "react";
 import { ArrestsDataType } from "../../types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -73,8 +73,8 @@ export function ArrestsBarChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-md">{`Crime trend breakdown: 2019 - ${currentYear}`}</CardTitle>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
+        <CardTitle className="text-md text-center">Arrests Vs. None arrests</CardTitle>
+        <CardDescription className="text-sm italic text-center px-10">{`A comparison of arrests made on the crimes versus no arrests made in ${currentYear}.`}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
