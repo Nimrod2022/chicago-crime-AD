@@ -123,6 +123,7 @@ function MapComponent() {
           if (districtName && districtName !== currentDistrict) {
             // Set the district filter in the context
             setDistrictFilterMap(districtName);
+          
 
             // Highlight the selected feature
             if (selectedFeature) {

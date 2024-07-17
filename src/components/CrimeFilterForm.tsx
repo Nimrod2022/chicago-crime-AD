@@ -24,25 +24,33 @@ function CrimeFilterForm() {
     selectedDistrict,
   } = useCrimeContext();
 
-  // Local state for the form
-  const [year, setYear] = useState(currentYear);
-  const [district, setDistrict] = useState(currentDistrict);
+  // // Local state for the form
+  // const [year, setYear] = useState(currentYear);
+  // const [district, setDistrict] = useState(currentDistrict);
 
  
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setCurrentYear(year);
-    setCurrentDistrict(district);
-    getFilteredData(year, district);
+    setCurrentYear(currentYear);
+    setCurrentDistrict(currentDistrict);
+    getFilteredData(currentYear, currentDistrict);
   }
+
+  useEffect(()=>{
+    if(selectedDistrict){
+      setCurrentDistrict(selectedDistrict)
+      getFilteredData(currentYear, selectedDistrict)
+      
+    }
+  }, [selectedDistrict])
 
   return (
     <div className="pt-5 px-5 justify-center items-center flex">
       <form onSubmit={handleSubmit} className="flex gap-x-10">
         <div className="">
-          <Listbox value={year} onChange={setYear}>
+          <Listbox value={currentYear} onChange={setCurrentYear}>
             <ListboxButton className="year__button">
-              {year}
+              {currentYear}
               <ChevronDownIcon
                 className="  size-7 fill-[#7879F1]"
                 aria-hidden="true"
@@ -65,11 +73,11 @@ function CrimeFilterForm() {
           </Listbox>
         </div>
 
-        <Listbox value={district} onChange={setDistrict}>
+        <Listbox value={currentDistrict} onChange={setCurrentDistrict}>
           <ListboxButton className="district__button">
             <CiLocationOn className="text-[#7879F1] size-5" />
 
-            {district}
+            {currentDistrict}
             <ChevronDownIcon
               className="  size-7 fill-[#7879F1]"
               aria-hidden="true"
