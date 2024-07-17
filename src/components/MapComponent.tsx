@@ -27,9 +27,9 @@ function MapComponent() {
   const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
 
-  // const { currentDistrict } = useCrimeContext();
+  const { currentDistrict, setDistrictFilterMap } = useCrimeContext();
 
-  // let selectedFeature: Feature<Geometry> | null = null;
+  let selectedFeature: Feature<Geometry> | null = null;
 
   // fetch boundaries data
   useEffect(() => {
@@ -110,6 +110,28 @@ function MapComponent() {
         fill: new Fill({
           color: "#3615FF",
         }),
+      });
+
+      // Select feature onclick
+      map.on("singleclick", function (evt) {
+        if (map.hasFeatureAtPixel(evt.pixel)) {
+          const feature = map.getFeaturesAtPixel(
+            evt.pixel
+          )[0] as Feature<Geometry>;
+          const districtName = feature.get("community");
+
+          if (districtName && districtName !== currentDistrict) {
+            // Set the district filter in the context
+            setDistrictFilterMap(districtName);
+
+            // Highlight the selected feature
+            if (selectedFeature) {
+              selectedFeature.setStyle(undefined);
+            }
+            feature.setStyle(selectedStyle);
+            selectedFeature = feature;
+          }
+        }
       });
 
       // Clean-up function

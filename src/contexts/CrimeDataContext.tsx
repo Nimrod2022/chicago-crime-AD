@@ -67,6 +67,17 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     }
   }
 
+  const setDistrictFilterMap = (district: string) => {
+    const formattedName = toTitleCase(district);
+
+    if (formattedName !== currentDistrict) {
+      setCurrentDistrict(formattedName);
+      setSelectedDistrict(formattedName);
+
+      getFilteredData(currentYear, formattedName);
+    }
+  };
+
   // console.log(filteredData)
   // Formating district name from map click to form
   function toTitleCase(str: string) {
@@ -93,6 +104,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
         currentDistrict,
         setCurrentDistrict,
         toTitleCase,
+        setDistrictFilterMap
       }}
     >
       {children}
