@@ -67,6 +67,17 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     }
   }
 
+  // Formating district name from map click to form
+  function toTitleCase(str: string) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map(function (word: string) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  }
+
   const setDistrictFilterMap = (district: string) => {
     const formattedName = toTitleCase(district);
 
@@ -79,16 +90,6 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   };
 
   // console.log(filteredData)
-  // Formating district name from map click to form
-  function toTitleCase(str: string) {
-    return str
-      .toLowerCase()
-      .split(" ")
-      .map(function (word: string) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(" ");
-  }
 
   return (
     <CrimeContext.Provider
@@ -104,7 +105,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
         currentDistrict,
         setCurrentDistrict,
         toTitleCase,
-        setDistrictFilterMap
+        setDistrictFilterMap,
       }}
     >
       {children}

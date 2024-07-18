@@ -27,7 +27,13 @@ function MapComponent() {
   const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
 
-  const { currentDistrict, setDistrictFilterMap,currentYear, getFilteredData } = useCrimeContext();
+  const {
+    currentDistrict,
+    setDistrictFilterMap,
+    currentYear,
+    getFilteredData,
+    toTitleCase,
+  } = useCrimeContext();
 
   let selectedFeature: Feature<Geometry> | null = null;
 
@@ -123,8 +129,7 @@ function MapComponent() {
           if (districtName && districtName !== currentDistrict) {
             // Set the district filter in the context
             setDistrictFilterMap(districtName);
-            getFilteredData(currentYear, districtName)
-          
+            getFilteredData(currentYear, districtName);
 
             // Highlight the selected feature
             if (selectedFeature) {
@@ -139,7 +144,6 @@ function MapComponent() {
       // Clean-up function
       return () => {
         map.setTarget(undefined);
-        
       };
     }
   }, [boundaries]);

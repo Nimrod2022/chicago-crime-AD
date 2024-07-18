@@ -24,9 +24,7 @@ function CrimeFilterForm() {
     selectedDistrict,
   } = useCrimeContext();
 
-  // // Local state for the form
-  // const [year, setYear] = useState(currentYear);
-  // const [district, setDistrict] = useState(currentDistrict);
+ 
 
  
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
