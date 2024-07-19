@@ -29,6 +29,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
+    "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
     "stream-json": "^1.8.0",
     "tailwind-merge": "^2.4.0",

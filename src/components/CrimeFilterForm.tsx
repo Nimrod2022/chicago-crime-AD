@@ -77,12 +77,19 @@ function CrimeFilterForm() {
               aria-hidden="true"
             />
           </ListboxButton>
-          <ListboxOptions anchor="bottom">
+          <ListboxOptions
+            anchor="bottom"
+            className="bg-white w-[250px] rounded-b-xl border-1 shadow-lg"
+          >
             {chicagoDistricts.map((district, index) => (
               <ListboxOption
                 key={index}
                 value={district}
-                className="filter__options group"
+                className={`filter__options group  ${
+                  (index + 1) % 4 === 0
+                    ? "border-b border-gray-200 border-opacity-60 "
+                    : ""
+                }`}
               >
                 {district}
                 <CheckIcon className="check__icon" />
