@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
@@ -15,7 +14,6 @@ import Stroke from "ol/style/Stroke";
 import Fill from "ol/style/Fill";
 import Overlay from "ol/Overlay";
 import Feature from "ol/Feature";
-
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
 
@@ -37,7 +35,7 @@ function MapComponent() {
 
   let selectedFeature: Feature<Geometry> | null = null;
 
-  // fetch boundaries data
+  // Fetch boundaries data
   useEffect(() => {
     const getBoundaries = async () => {
       try {
@@ -95,7 +93,6 @@ function MapComponent() {
       map.addOverlay(overlay);
 
       // Show district name on mouse hover
-
       map.on("pointermove", function (evt) {
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(evt.pixel)[0];
@@ -111,7 +108,6 @@ function MapComponent() {
       });
 
       // Selected district style
-
       const selectedStyle = new Style({
         fill: new Fill({
           color: "#3615FF",
@@ -128,11 +124,6 @@ function MapComponent() {
 
           if (districtName && districtName !== currentDistrict) {
             setDistrictFilterMap(districtName);
-            const formattedName = toTitleCase(districtName);
-
-            setDistrictFilterMap(formattedName);
-
-            getFilteredData(currentYear, formattedName);
 
             if (selectedFeature) {
               selectedFeature.setStyle(undefined);
@@ -149,6 +140,12 @@ function MapComponent() {
       };
     }
   }, [boundaries]);
+
+  useEffect(() => {
+    if (currentDistrict && currentYear) {
+      getFilteredData(currentYear, currentDistrict);
+    }
+  }, [currentDistrict, currentYear]);
 
   return (
     <div>

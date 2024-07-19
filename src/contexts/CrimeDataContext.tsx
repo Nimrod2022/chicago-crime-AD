@@ -85,7 +85,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       setCurrentDistrict(formattedName);
       setSelectedDistrict(formattedName);
 
-      getFilteredData(currentYear, formattedName);
+      // getFilteredData(currentYear, formattedName);
     }
   };
 
