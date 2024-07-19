@@ -51,12 +51,20 @@ function CrimeFilterForm() {
               />
             </ListboxButton>
 
-            <ListboxOptions anchor="bottom" transition>
-              {availableYears.map((year) => (
+            <ListboxOptions
+              anchor="bottom"
+              transition
+              className="bg-white w-[115px] rounded-b-xl border-1 shadow-lg"
+            >
+              {availableYears.map((year, index) => (
                 <ListboxOption
                   value={year}
                   key={year}
-                  className="filter__options group"
+                  className={`filter__options group  ${
+                    (index + 1) % 2 === 0
+                      ? "border-b border-gray-200 border-opacity-60 "
+                      : ""
+                  }`}
                 >
                   <CheckIcon className="check__icon" />
 

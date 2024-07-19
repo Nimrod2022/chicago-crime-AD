@@ -89,10 +89,8 @@ const Contact = () => {
   return (
     <>
       <section id="contact">
-        <div className="flex  flex-col justify-center items-center bg-[#ffffff] relative py-5 md:py-32">
-          <h1
-            className="text-2xl md:text-3xl text-[#26313F] font-extrabold"
-          >
+        <div className="flex  flex-col justify-center items-center bg-[#ffffff] relative pt-20">
+          <h1 className="text-xl md:text-3xl text-[#7879F1] font-extrabold">
             Get in Touch
           </h1>
           <div className="w-full md:flex rounded-2xl  md:w-auto my-10 md:px-0 px-3">
@@ -167,10 +165,10 @@ const Contact = () => {
                 <div className="md:pt-0 flex flex-col items-center justify-center">
                   <button
                     type="submit"
-                    className={`inline-block  w-auto text-md rounded-lg px-3 py-2 md:px-5 md:py-3 font-bold sm:w-auto ${
+                    className={`inline-block  w-auto  text-md rounded-lg px-3 py-2 md:px-5 md:py-3 font-bold sm:w-auto ${
                       isSubmitted
                         ? "bg-green-500 text-white"
-                        : "bg-[#26313F] text-white"
+                        : "bg-[#7879F1] text-white"
                     }`}
                   >
                     {isSubmitted ? "Message sent successfully" : "Send message"}
