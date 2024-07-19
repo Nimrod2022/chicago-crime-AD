@@ -125,10 +125,10 @@ function MapComponent() {
           if (districtName && districtName !== currentDistrict) {
             setDistrictFilterMap(districtName);
 
-            if (selectedFeature) {
-              selectedFeature.setStyle(undefined);
-            }
-            feature.setStyle(selectedStyle);
+            // if (selectedFeature) {
+            //   selectedFeature.setStyle(undefined);
+            // }
+            // feature.setStyle(selectedStyle);
             selectedFeature = feature;
           }
         }
