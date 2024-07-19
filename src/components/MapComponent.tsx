@@ -127,11 +127,10 @@ function MapComponent() {
           const districtName = feature.get("community");
 
           if (districtName && districtName !== currentDistrict) {
-            // Set the district filter in the context
-            setDistrictFilterMap(districtName);
-            getFilteredData(currentYear, districtName);
+            const formattedName = toTitleCase(districtName);
 
-            // Highlight the selected feature
+            setDistrictFilterMap(districtName);
+
             if (selectedFeature) {
               selectedFeature.setStyle(undefined);
             }

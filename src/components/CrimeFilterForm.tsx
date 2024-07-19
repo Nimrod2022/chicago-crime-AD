@@ -10,7 +10,7 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { CiLocationOn } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 
-import {  FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 
@@ -24,9 +24,6 @@ function CrimeFilterForm() {
     selectedDistrict,
   } = useCrimeContext();
 
- 
-
- 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setCurrentYear(currentYear);
@@ -34,13 +31,12 @@ function CrimeFilterForm() {
     getFilteredData(currentYear, currentDistrict);
   }
 
-  useEffect(()=>{
-    if(selectedDistrict){
-      setCurrentDistrict(selectedDistrict)
-      getFilteredData(currentYear, selectedDistrict)
-      
+  useEffect(() => {
+    if (selectedDistrict) {
+      setCurrentDistrict(selectedDistrict);
+      getFilteredData(currentYear, selectedDistrict);
     }
-  }, [selectedDistrict])
+  }, [selectedDistrict]);
 
   return (
     <div className="pt-5 px-5 justify-center items-center flex">
