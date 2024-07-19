@@ -127,9 +127,12 @@ function MapComponent() {
           const districtName = feature.get("community");
 
           if (districtName && districtName !== currentDistrict) {
+            setDistrictFilterMap(districtName);
             const formattedName = toTitleCase(districtName);
 
-            setDistrictFilterMap(districtName);
+            setDistrictFilterMap(formattedName);
+
+            getFilteredData(currentYear, formattedName);
 
             if (selectedFeature) {
               selectedFeature.setStyle(undefined);
