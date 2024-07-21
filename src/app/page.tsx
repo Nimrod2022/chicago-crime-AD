@@ -35,8 +35,8 @@ export default function Home() {
               <MapComponent />
             </div>
 
-            <div className="w-[50%] h-full">
-              <div className="h-[25%]">
+            <div className="w-[50%]">
+              <div className="">
                 <nav className="w-full h-[50%]">
                   <div className="flex justify-between px-5 py-3 shadow-md h-full">
                     <h1
@@ -101,7 +101,7 @@ export default function Home() {
                     //     </div>
                     //   </div>
                     // </div>
-                    <div className="h-full pt-5">
+                    <div className=" pt-5">
                       <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 h-full">
                         <div className="border-r-0 sm:border-r-2 border-t-2 border-b-2 sm:border-b-0">
                           <TotalCrimesChart />
