@@ -102,7 +102,7 @@ export default function Home() {
                     //   </div>
                     // </div>
                     <div className=" pt-5">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 h-full">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 ">
                         <div className="border-r-0 sm:border-r-2 border-t-2 border-b-2 sm:border-b-0">
                           <TotalCrimesChart />
                         </div>
