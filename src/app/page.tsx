@@ -75,22 +75,44 @@ export default function Home() {
                   </div>
                 ) : (
                   filteredData && (
+                    // <div className="h-full pt-5">
+                    //   <div className="h-1/2 ">
+                    //     <div className="flex w-full ">
+                    //       <div className="w-[50%] h-full border-r-2 border-t-2 ">
+                    //         <TotalCrimesChart />
+                    //       </div>
+
+                    //       <div className="w-[50%] border-t-2 h-full">
+                    //         <ArrestsBarChart />
+                    //       </div>
+                    //     </div>
+                    //   </div>
+
+                    //   <hr className=""/>
+
+                    //   <div className=" h-1/2 ">
+                    //     <div className="flex">
+                    //       <div className="w-[50%] border-r-2 border-b-2  h-full">
+                    //         <CrimeTrendChart />
+                    //       </div>
+                    //       <div className="w-[50%] border-b-2  h-full">
+                    //         <DomesticCrimesChart />
+                    //       </div>
+                    //     </div>
+                    //   </div>
+                    // </div>
                     <div className="h-full pt-5">
-                      <div className="flex w-full h-1/2 ">
-                        <div className="w-[50%] h-full border-r-2 border-t-2 ">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 h-full">
+                        <div className="border-r-0 sm:border-r-2 border-t-2 border-b-2 sm:border-b-0">
                           <TotalCrimesChart />
                         </div>
-
-                        <div className="w-[50%] border-t-2 h-full">
+                        <div className="border-t-2 border-b-2 sm:border-b-0">
                           <ArrestsBarChart />
                         </div>
-                      </div>
-                      <hr />
-                      <div className="flex h-1/2">
-                        <div className="w-[50%] border-r-2 border-b-2  h-full">
+                        <div className="border-r-0 sm:border-r-2 border-b-2 border-t-0 sm:border-t-2">
                           <CrimeTrendChart />
                         </div>
-                        <div className="w-[50%] border-b-2  h-full">
+                        <div className="border-b-2 border-t-0 sm:border-t-2">
                           <DomesticCrimesChart />
                         </div>
                       </div>

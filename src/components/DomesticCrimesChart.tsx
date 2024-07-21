@@ -88,7 +88,7 @@ export function DomesticCrimesChart() {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[236px]"
+          className="mx-auto aspect-square  max-h-[236px]"
         >
           <PieChart>
             <Tooltip content={<ChartTooltipContent nameKey="name" />} />
