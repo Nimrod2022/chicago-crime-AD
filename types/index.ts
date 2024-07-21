@@ -85,6 +85,8 @@ export interface CrimeContextProps {
   setCurrentDistrict: (district: string) => void;
   toTitleCase: (district: string) => void;
   getDistrictStatistics: (district: string) => DistrictStatistics | null;
+  getCrimeTrend: (district: string) => string | null;
+  getMostCommonCrimeType: (district: string) => string | null;
 }
 
 export interface TotalCrimesChartDataType {

@@ -17,12 +17,6 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
 import { fetchData } from "../../utils";
 
-type AnyFunction = (...args: any[]) => any;
-
-interface DebounceFunction<T extends AnyFunction> {
-  (func: T, wait: number): (...args: Parameters<T>) => void;
-}
-
 const BOUNDARIES_URL =
   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago.geojson";
 
@@ -37,17 +31,25 @@ function MapComponent() {
     crimeData,
     loading,
     getDistrictStatistics,
+    getMostCommonCrimeType,
+    getCrimeTrend,
     currentYear,
     currentDistrict,
     getFilteredData,
     setDistrictFilterMap,
   } = useCrimeContext();
 
+  type AnyFunction = (...args: any[]) => any;
+
+  interface DebounceFunction<T extends AnyFunction> {
+    (func: T, wait: number): (...args: Parameters<T>) => void;
+  }
+
   let selectedFeature: Feature<Geometry> | null = null;
 
   const debounce: DebounceFunction<AnyFunction> = (func, wait) => {
     let timeout: NodeJS.Timeout;
-    return (...args) => {
+    return (...args: Parameters<AnyFunction>) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => func(...args), wait);
     };
@@ -75,13 +77,54 @@ function MapComponent() {
 
         if (popupContainer.current) {
           const stats = getDistrictStatistics(districtName);
+          const mostCommonCrimeType = getMostCommonCrimeType(districtName);
+          const crimeTrend = getCrimeTrend(districtName);
+
           const content = `
-          <div style="text-align: center;">
-            <strong style="font-size: 1rem;">${districtName}</strong><br/>
-            Total Crimes: ${stats ? stats.totalCrimes : "N/A"}<br/>
-            Arrest Rate: ${stats ? stats.arrestRate.toFixed(2) : "N/A"}%
-          </div>
-        `;
+                  <div class="bg-white shadow space-y-2 p-3 rounded-xl w-64">
+                    <h1 class="text-center font-semibold text-md">${districtName}</h1>
+                    <p class="text-sm">Crimes 2019-23: <span class="inline-block bg-yellow-200 text-black text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"> ${
+                      stats ? stats.totalCrimes : "N/A"
+                    }</span></p>
+                    <div >
+                      <p class="text-sm">Arrest Success: 
+                        <span class="inline-block bg-green-200 text-black text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                          ${stats ? stats.arrestRate.toFixed(2) : "N/A"}%
+                        </span>
+                      </p>
+                    </div>
+                    <div class="text-sm">
+                      Primary Crime: 
+                      <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+                        ${mostCommonCrimeType || "N/A"}
+                      </span>
+                    </div>
+                    <div class="text-sm flex items-center space-x-2">
+                      <p>Trend 2022-23:
+                      <span class="inline-block bg-gray-200 text-black text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+
+                      <span class="${
+                        crimeTrend === "Increasing"
+                          ? "text-red-500"
+                          : crimeTrend === "Decreasing"
+                          ? " text-green-500"
+                          : "text-yellow-500"
+                      }">
+                        ${
+                          crimeTrend === "Increasing"
+                            ? "↑ Increasing"
+                            : crimeTrend === "Decreasing"
+                            ? "↓ Decreasing"
+                            : "→ Stable"
+                        }
+                      
+                      </span>
+                      
+                      </p>
+                    </div>
+                  </div>
+              `;
+
           overlay.setPosition(evt.coordinate);
           popupContainer.current.innerHTML = content;
           overlay.setElement(popupContainer.current);
@@ -91,14 +134,20 @@ function MapComponent() {
           }
           const timeout = setTimeout(() => {
             overlay.setPosition(undefined);
-          }, 10000);
+          }, 7000);
           setPopupTimeout(timeout);
         }
       } else {
         overlay.setPosition(undefined);
       }
     }, 200),
-    [crimeData, getDistrictStatistics, popupTimeout]
+    [
+      crimeData,
+      getDistrictStatistics,
+      getMostCommonCrimeType,
+      getCrimeTrend,
+      popupTimeout,
+    ]
   );
 
   const handleSingleClick = useCallback(
@@ -168,6 +217,7 @@ function MapComponent() {
           ? popupContainer.current
           : document.createElement("div"),
         autoPan: true,
+        offset: [10, -30],
       });
       map.addOverlay(overlay);
 
@@ -189,12 +239,12 @@ function MapComponent() {
     if (currentDistrict && currentYear) {
       getFilteredData(currentYear, currentDistrict);
     }
-  }, [ getFilteredData]);
+  }, [getFilteredData]);
 
   return (
     <div>
       <div ref={mapContainer} className="map"></div>
-      <div ref={popupContainer} className="bg-white p-2 rounded-xl">
+      <div ref={popupContainer} className="">
         <div className="w-[250px]"></div>
       </div>
     </div>

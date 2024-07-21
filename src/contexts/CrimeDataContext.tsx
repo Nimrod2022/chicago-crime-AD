@@ -22,6 +22,18 @@ interface CrimeProviderProps {
   children: ReactNode;
 }
 
+interface CrimeProperties {
+  type: string;
+  district_name: string;
+  [key: string]: any;
+}
+
+interface CrimeFeature {
+  properties: CrimeProperties;
+}
+
+type CrimeTypeCounts = Record<string, number>;
+
 export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   const [crimeData, setCrimeData] = useState<ApiResponseProps | null>(null);
   const [filteredData, setFilteredData] = useState<CrimeFeatureProps[] | null>(
@@ -113,6 +125,64 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData]
   );
 
+  const getMostCommonCrimeType = useCallback(
+    (district: string): string | null => {
+      if (!crimeData) return null;
+
+      const districtCrimes = crimeData.features.filter(
+        (crime) =>
+          crime.properties.district_name.trim().toLowerCase() ===
+          district.trim().toLowerCase()
+      );
+
+      const crimeTypeCounts: CrimeTypeCounts = districtCrimes.reduce(
+        (acc: CrimeTypeCounts, crime: CrimeFeature) => {
+          const crimeType: string = crime.properties.type;
+          acc[crimeType] = (acc[crimeType] || 0) + 1;
+          return acc;
+        },
+        {}
+      );
+
+      const mostCommonCrimeType = Object.keys(crimeTypeCounts).reduce(
+        (a, b) => (crimeTypeCounts[a] > crimeTypeCounts[b] ? a : b),
+        ""
+      );
+
+      return mostCommonCrimeType;
+    },
+    [crimeData]
+  );
+
+  const getCrimeTrend = useCallback(
+    (district: string) => {
+      if (!crimeData) return null;
+
+      const currentYearCrimes = crimeData.features.filter(
+        (crime) =>
+          crime.properties.year === currentYear &&
+          crime.properties.district_name.trim().toLowerCase() ===
+            district.trim().toLowerCase()
+      ).length;
+
+      const previousYearCrimes = crimeData.features.filter(
+        (crime) =>
+          crime.properties.year === currentYear - 1 &&
+          crime.properties.district_name.trim().toLowerCase() ===
+            district.trim().toLowerCase()
+      ).length;
+
+      if (currentYearCrimes > previousYearCrimes) {
+        return "Increasing";
+      } else if (currentYearCrimes < previousYearCrimes) {
+        return "Decreasing";
+      } else {
+        return "Stable";
+      }
+    },
+    [crimeData, currentYear]
+  );
+
   const contextValue = useMemo(
     () => ({
       crimeData,
@@ -128,6 +198,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       toTitleCase,
       setDistrictFilterMap,
       getDistrictStatistics,
+      getMostCommonCrimeType,
+      getCrimeTrend,
     }),
     [
       crimeData,
@@ -141,6 +213,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       toTitleCase,
       setDistrictFilterMap,
       getDistrictStatistics,
+      getMostCommonCrimeType,
+      getCrimeTrend,
     ]
   );
 
