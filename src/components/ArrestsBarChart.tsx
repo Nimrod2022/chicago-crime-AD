@@ -76,7 +76,7 @@ export function ArrestsBarChart() {
         <CardTitle className="text-md text-center">
           Arrests Vs. None arrests
         </CardTitle>
-        <CardDescription className="text-sm italic text-center px-10">{`A comparison of arrests made on the crimes versus no arrests made in ${currentYear}.`}</CardDescription>
+        <CardDescription className="text-sm italic text-center px-10">{`A comparison of arrests made on the crimes versus no arrests made from 2019 - ${currentYear}.`}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="max-h-[250px]">

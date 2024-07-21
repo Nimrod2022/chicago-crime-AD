@@ -106,12 +106,12 @@ function CrimeFilterForm() {
           </ListboxOptions>
         </Listbox>
 
-        <button
+        {/* <button
           className="text-white w-[115px] h-[45px] px-5 py-2 bg-[#7879F1] rounded-xl"
           type="submit"
         >
           Filter
-        </button>
+        </button> */}
       </form>
     </div>
   );

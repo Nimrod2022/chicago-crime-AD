@@ -254,7 +254,7 @@ function MapComponent() {
     if (currentDistrict && currentYear) {
       getFilteredData(currentYear, currentDistrict);
     }
-  }, [getFilteredData]);
+  }, [getFilteredData, currentDistrict, currentYear]);
 
   return (
     <div>
