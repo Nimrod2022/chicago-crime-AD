@@ -73,7 +73,7 @@ export function TotalCrimesChart() {
     }
   }, [filteredData]);
 
-  console.log("total crims,", chartData)
+  // console.log("total crims,", chartData)
 
   return (
     <div>

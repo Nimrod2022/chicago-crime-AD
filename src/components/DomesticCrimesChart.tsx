@@ -76,7 +76,7 @@ export function DomesticCrimesChart() {
     }
   }, [crimeData, currentYear, selectedDistrict]);
 
-  console.log(chartData);
+  // console.log(chartData);
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

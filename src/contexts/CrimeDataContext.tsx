@@ -15,10 +15,10 @@ import {
   DistrictStatistics,
 } from "../../types";
 
-// Context
+// Context 
 const CrimeContext = createContext<CrimeContextProps | undefined>(undefined);
 
-// Provider component
+
 interface CrimeProviderProps {
   children: ReactNode;
 }
@@ -51,11 +51,11 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
-  useEffect(() => {
-    if (currentDistrict !== "Select District") {
-      getFilteredData(currentYear, currentDistrict);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (currentDistrict !== "Select District") {
+  //     getFilteredData(currentYear, currentDistrict);
+  //   }
+  // }, []);
 
   // Filter data
   function getFilteredData(year: number, district: string) {
@@ -73,7 +73,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     }
   }
 
-  // Formating district name from map click to form
+  // Formating district name 
   function toTitleCase(str: string) {
     return str
       .toLowerCase()
@@ -92,6 +92,8 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       setSelectedDistrict(formattedName);
     }
   };
+
+  // Popup statistics
 
   const getDistrictStatistics = (
     district: string

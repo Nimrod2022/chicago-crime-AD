@@ -32,6 +32,9 @@ function MapComponent() {
     loading,
     getDistrictStatistics,
     currentYear,
+    currentDistrict,
+    filteredData,
+    getFilteredData,
     setCurrentDistrict,
     setDistrictFilterMap,
   } = useCrimeContext();
@@ -101,7 +104,7 @@ function MapComponent() {
       });
       map.addOverlay(overlay);
 
-      // Show district name on mouse hover
+      // Show popup mouse hover
       map.on("pointermove", function (evt) {
         if (!crimeData) return;
         if (map.hasFeatureAtPixel(evt.pixel)) {
@@ -126,7 +129,7 @@ function MapComponent() {
             }
             const timeout = setTimeout(() => {
               overlay.setPosition(undefined);
-            }, 10000); // Adjust the timeout duration (in milliseconds) as needed
+            }, 10000); 
             setPopupTimeout(timeout);
           }
         } else {
@@ -135,25 +138,35 @@ function MapComponent() {
       });
 
       // Select feature onclick
-      map.on("singleclick", function (evt) {
-        if (!crimeData) return;
-        if (map.hasFeatureAtPixel(evt.pixel)) {
-          const feature = map.getFeaturesAtPixel(
-            evt.pixel
-          )[0] as Feature<Geometry>;
-          const districtName = feature.get("community");
+       map.on("singleclick", function (evt) {
+         if (map.hasFeatureAtPixel(evt.pixel)) {
+           const feature = map.getFeaturesAtPixel(
+             evt.pixel
+           )[0] as Feature<Geometry>;
+           const districtName = feature.get("community");
 
-          if (districtName) {
-            setCurrentDistrict(districtName);
-            setDistrictFilterMap(districtName);
-            selectedFeature = feature;
-          }
-        }
-      });
+           if (districtName && districtName !== currentDistrict) {
+             setDistrictFilterMap(districtName);
+            //  setCurrentDistrict(districtName)
+
+             if (selectedFeature) {
+               selectedFeature.setStyle(undefined);
+             }
+            //  feature.setStyle(selectedStyle);
+             selectedFeature = feature;
+           }
+         }
+       });
 
       setMapInitialized(true);
     }
-  }, [boundaries, crimeData, loading, mapInitialized]);
+  }, [boundaries]);
+
+  // useEffect(() => {
+  //   if (currentDistrict && currentYear) {
+  //     getFilteredData(currentYear, currentDistrict);
+  //   }
+  // }, []);
 
   return (
     <div>
