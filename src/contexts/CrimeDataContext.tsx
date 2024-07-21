@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, {
   createContext,
   useContext,
@@ -16,36 +17,43 @@ import {
   DistrictStatistics,
 } from "../../types";
 
+// Creating context
 const CrimeContext = createContext<CrimeContextProps | undefined>(undefined);
 
+// Provider's props
 interface CrimeProviderProps {
   children: ReactNode;
 }
 
+// Interface for crime properties
 interface CrimeProperties {
   type: string;
   district_name: string;
   [key: string]: any;
 }
 
+// Interface for a crime feature
 interface CrimeFeature {
   properties: CrimeProperties;
 }
 
+// Type for counting occurrences of crime types
 type CrimeTypeCounts = Record<string, number>;
 
+// Crime provider component
 export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
-  const [crimeData, setCrimeData] = useState<ApiResponseProps | null>(null);
+  const [crimeData, setCrimeData] = useState<ApiResponseProps | null>(null); 
   const [filteredData, setFilteredData] = useState<CrimeFeatureProps[] | null>(
     null
-  );
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [currentYear, setCurrentYear] = useState<number>(2023);
+  ); // State to store filtered crime data
+  const [loading, setLoading] = useState<boolean>(true); 
+  const [error, setError] = useState<string | null>(null); 
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(""); 
+  const [currentYear, setCurrentYear] = useState<number>(2023); 
   const [currentDistrict, setCurrentDistrict] =
-    useState<string>("Select District");
+    useState<string>("Select District"); 
 
+  // Fetch crime data on component mount
   useEffect(() => {
     const getCrimeData = async () => {
       try {
@@ -62,6 +70,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
+  // Function to filter data by year and district
   const getFilteredData = useCallback(
     (year: number, district: string) => {
       setCurrentYear(year);
@@ -80,6 +89,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData]
   );
 
+  // Function to convert a string to title case
   const toTitleCase = useCallback((str: string) => {
     return str
       .toLowerCase()
@@ -88,6 +98,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       .join(" ");
   }, []);
 
+  // Function to set the current district filter based on a map selection
   const setDistrictFilterMap = useCallback(
     (district: string) => {
       const formattedName = toTitleCase(district);
@@ -100,6 +111,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [currentDistrict, toTitleCase]
   );
 
+  // Function to get statistics for a district
   const getDistrictStatistics = useCallback(
     (district: string): DistrictStatistics | null => {
       if (!crimeData) {
@@ -125,6 +137,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData]
   );
 
+  // Get the most common crime type in a district
   const getMostCommonCrimeType = useCallback(
     (district: string): string | null => {
       if (!crimeData) return null;
@@ -154,6 +167,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData]
   );
 
+  // Get tcrime trend in a district
   const getCrimeTrend = useCallback(
     (district: string) => {
       if (!crimeData) return null;
@@ -183,6 +197,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData, currentYear]
   );
 
+  // Memoizing to optimize performance
   const contextValue = useMemo(
     () => ({
       crimeData,
@@ -225,6 +240,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
   );
 };
 
+// Hook to use the CrimeContext
 export const useCrimeContext = (): CrimeContextProps => {
   const context = useContext(CrimeContext);
   if (context === undefined) {
