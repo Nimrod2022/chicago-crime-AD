@@ -33,7 +33,6 @@ function MapComponent() {
     getDistrictStatistics,
     currentYear,
     setCurrentDistrict,
-    getFilteredData,
     setDistrictFilterMap,
   } = useCrimeContext();
 
@@ -43,9 +42,7 @@ function MapComponent() {
   useEffect(() => {
     const getBoundaries = async () => {
       try {
-        console.log("Fetching boundaries data...");
         const data = await fetchData(BOUNDARIES_URL);
-        console.log("Fetched boundaries data:", data);
         setBoundaries(data);
       } catch (error) {
         console.error("Error fetching boundaries:", error);
@@ -63,7 +60,6 @@ function MapComponent() {
       !loading &&
       !mapInitialized
     ) {
-      console.log("Initializing map...");
       const vectorSource = new VectorSource({
         features: new GeoJSON().readFeatures(boundaries, {
           featureProjection: "EPSG:3857",
@@ -107,21 +103,13 @@ function MapComponent() {
 
       // Show district name on mouse hover
       map.on("pointermove", function (evt) {
-        if (!crimeData) {
-          console.log("crimeData is not available.");
-          return;
-        }
+        if (!crimeData) return;
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(evt.pixel)[0];
           const districtName = feature.get("community");
 
-          console.log("Hovered district name:", districtName);
-
           if (popupContainer.current) {
             const stats = getDistrictStatistics(districtName);
-
-            console.log("District stats:", stats);
-
             const content = `
               <div style="text-align: center;">
                 <strong style="font-size: 1rem;">${districtName}</strong><br/>
@@ -148,19 +136,15 @@ function MapComponent() {
 
       // Select feature onclick
       map.on("singleclick", function (evt) {
-        if (!crimeData) {
-          console.log("crimeData is not available.");
-          return;
-        }
+        if (!crimeData) return;
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(
             evt.pixel
           )[0] as Feature<Geometry>;
           const districtName = feature.get("community");
 
-          console.log("Clicked district name:", districtName);
-
           if (districtName) {
+            setCurrentDistrict(districtName);
             setDistrictFilterMap(districtName);
             selectedFeature = feature;
           }
@@ -168,12 +152,6 @@ function MapComponent() {
       });
 
       setMapInitialized(true);
-    } else {
-      console.log("Map initialization conditions not met.");
-      console.log("boundaries:", boundaries);
-      console.log("loading:", loading);
-      console.log("crimeData:", crimeData);
-      console.log("mapInitialized:", mapInitialized);
     }
   }, [boundaries, crimeData, loading, mapInitialized]);
 
