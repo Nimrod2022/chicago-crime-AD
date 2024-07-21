@@ -73,11 +73,13 @@ export function ArrestsBarChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-md text-center">Arrests Vs. None arrests</CardTitle>
+        <CardTitle className="text-md text-center">
+          Arrests Vs. None arrests
+        </CardTitle>
         <CardDescription className="text-sm italic text-center px-10">{`A comparison of arrests made on the crimes versus no arrests made in ${currentYear}.`}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="max-h-[250px]">
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={chartData}>
               <CartesianGrid vertical={false} />

@@ -36,7 +36,7 @@ export default function Home() {
 
           <div className="w-full sm:w-[50%] h-full flex flex-col">
             <div className="flex-shrink-0">
-              <nav className="w-full h-16">
+              <nav className="w-full h-14">
                 <div className="flex justify-between px-5 py-3 shadow-md h-full">
                   <h1
                     onClick={handleCWWClick}
@@ -61,7 +61,7 @@ export default function Home() {
                 </div>
               </nav>
               {!showContact && (
-                <div className="h-24">
+                <div className="h-20">
                   <CrimeFilterForm />
                 </div>
               )}
@@ -74,7 +74,7 @@ export default function Home() {
                 </div>
               ) : (
                 filteredData && (
-                  <div className="h-full pt-2">
+                  <div className="h-full ">
                     <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 h-full">
                       <div className="border-r-0 md:border-r-2 border-t-2 border-b-2 md:border-b-0">
                         <TotalCrimesChart  />
