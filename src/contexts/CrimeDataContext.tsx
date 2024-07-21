@@ -1,11 +1,12 @@
-"use client";
-
+"use client"
 import React, {
   createContext,
   useContext,
   useEffect,
   useState,
   ReactNode,
+  useCallback,
+  useMemo,
 } from "react";
 import { fetchData } from "../../utils";
 import {
@@ -15,9 +16,7 @@ import {
   DistrictStatistics,
 } from "../../types";
 
-// Context 
 const CrimeContext = createContext<CrimeContextProps | undefined>(undefined);
-
 
 interface CrimeProviderProps {
   children: ReactNode;
@@ -51,98 +50,107 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
-  // useEffect(() => {
-  //   if (currentDistrict !== "Select District") {
-  //     getFilteredData(currentYear, currentDistrict);
-  //   }
-  // }, []);
+  const getFilteredData = useCallback(
+    (year: number, district: string) => {
+      setCurrentYear(year);
+      setSelectedDistrict(district);
 
-  // Filter data
-  function getFilteredData(year: number, district: string) {
-    setCurrentYear(year);
-    setSelectedDistrict(district);
+      if (crimeData && district) {
+        const newData = crimeData.features.filter(
+          (crime) =>
+            crime.properties.year === year &&
+            crime.properties.district_name.trim().toLowerCase() ===
+              district.trim().toLowerCase()
+        );
+        setFilteredData(newData);
+      }
+    },
+    [crimeData]
+  );
 
-    if (crimeData && district) {
-      const newData = crimeData.features.filter(
-        (crime) =>
-          crime.properties.year === year &&
-          crime.properties.district_name.trim().toLowerCase() ===
-            district.trim().toLowerCase()
-      );
-      setFilteredData(newData);
-    }
-  }
-
-  // Formating district name 
-  function toTitleCase(str: string) {
+  const toTitleCase = useCallback((str: string) => {
     return str
       .toLowerCase()
       .split(" ")
-      .map(function (word: string) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-  }
+  }, []);
 
-  const setDistrictFilterMap = (district: string) => {
-    const formattedName = toTitleCase(district);
+  const setDistrictFilterMap = useCallback(
+    (district: string) => {
+      const formattedName = toTitleCase(district);
 
-    if (formattedName !== currentDistrict) {
-      setCurrentDistrict(formattedName);
-      setSelectedDistrict(formattedName);
-    }
-  };
+      if (formattedName !== currentDistrict) {
+        setCurrentDistrict(formattedName);
+        setSelectedDistrict(formattedName);
+      }
+    },
+    [currentDistrict, toTitleCase]
+  );
 
-  // Popup statistics
+  const getDistrictStatistics = useCallback(
+    (district: string): DistrictStatistics | null => {
+      if (!crimeData) {
+        return null;
+      }
 
-  const getDistrictStatistics = (
-    district: string
-  ): DistrictStatistics | null => {
-    if (!crimeData) {
-      return null;
-    }
+      const formattedDistrict = district.trim().toLowerCase();
+      const districtCrimes = crimeData.features.filter((crime) => {
+        return (
+          crime.properties.district_name.trim().toLowerCase() ===
+          formattedDistrict
+        );
+      });
 
-    const formattedDistrict = district.trim().toLowerCase();
-    const districtCrimes = crimeData.features.filter((crime) => {
-      return (
-        crime.properties.district_name.trim().toLowerCase() ===
-        formattedDistrict
-      );
-    });
+      const totalCrimes = districtCrimes.length;
+      const arrests = districtCrimes.filter(
+        (crime) => crime.properties.arrest === true
+      ).length;
+      const arrestRate = totalCrimes > 0 ? (arrests / totalCrimes) * 100 : 0;
 
-    const totalCrimes = districtCrimes.length;
-    const arrests = districtCrimes.filter(
-      (crime) => crime.properties.arrest === true
-    ).length;
-    const arrestRate = totalCrimes > 0 ? (arrests / totalCrimes) * 100 : 0;
+      return { totalCrimes, arrestRate };
+    },
+    [crimeData]
+  );
 
-    return { totalCrimes, arrestRate };
-  };
+  const contextValue = useMemo(
+    () => ({
+      crimeData,
+      loading,
+      error,
+      getFilteredData,
+      filteredData,
+      currentYear,
+      setCurrentYear,
+      selectedDistrict,
+      currentDistrict,
+      setCurrentDistrict,
+      toTitleCase,
+      setDistrictFilterMap,
+      getDistrictStatistics,
+    }),
+    [
+      crimeData,
+      loading,
+      error,
+      getFilteredData,
+      filteredData,
+      currentYear,
+      selectedDistrict,
+      currentDistrict,
+      toTitleCase,
+      setDistrictFilterMap,
+      getDistrictStatistics,
+    ]
+  );
 
   return (
-    <CrimeContext.Provider
-      value={{
-        crimeData,
-        loading,
-        error,
-        getFilteredData,
-        filteredData,
-        currentYear,
-        setCurrentYear,
-        selectedDistrict,
-        currentDistrict,
-        setCurrentDistrict,
-        toTitleCase,
-        setDistrictFilterMap,
-        getDistrictStatistics,
-      }}
-    >
+    <CrimeContext.Provider value={contextValue}>
       {children}
     </CrimeContext.Provider>
   );
 };
 
-// Hook for context consumption
 export const useCrimeContext = (): CrimeContextProps => {
   const context = useContext(CrimeContext);
   if (context === undefined) {

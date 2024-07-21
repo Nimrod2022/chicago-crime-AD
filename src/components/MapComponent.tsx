@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
 import { OSM } from "ol/source";
@@ -17,6 +17,12 @@ import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
 import { fetchData } from "../../utils";
 
+type AnyFunction = (...args: any[]) => any;
+
+interface DebounceFunction<T extends AnyFunction> {
+  (func: T, wait: number): (...args: Parameters<T>) => void;
+}
+
 const BOUNDARIES_URL =
   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago.geojson";
 
@@ -33,28 +39,89 @@ function MapComponent() {
     getDistrictStatistics,
     currentYear,
     currentDistrict,
-    filteredData,
     getFilteredData,
-    setCurrentDistrict,
     setDistrictFilterMap,
   } = useCrimeContext();
 
   let selectedFeature: Feature<Geometry> | null = null;
 
-  // Fetch boundaries data
-  useEffect(() => {
-    const getBoundaries = async () => {
-      try {
-        const data = await fetchData(BOUNDARIES_URL);
-        setBoundaries(data);
-      } catch (error) {
-        console.error("Error fetching boundaries:", error);
-      }
+  const debounce: DebounceFunction<AnyFunction> = (func, wait) => {
+    let timeout: NodeJS.Timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
     };
-    getBoundaries();
+  };
+
+  const getBoundaries = useCallback(async () => {
+    try {
+      const data = await fetchData(BOUNDARIES_URL);
+      setBoundaries(data);
+    } catch (error) {
+      console.error("Error fetching boundaries:", error);
+    }
   }, []);
 
-  // Initialize map
+  useEffect(() => {
+    getBoundaries();
+  }, [getBoundaries]);
+
+  const handlePointerMove = useCallback(
+    debounce((evt, map, overlay) => {
+      if (!crimeData) return;
+      if (map.hasFeatureAtPixel(evt.pixel)) {
+        const feature = map.getFeaturesAtPixel(evt.pixel)[0];
+        const districtName = feature.get("community");
+
+        if (popupContainer.current) {
+          const stats = getDistrictStatistics(districtName);
+          const content = `
+          <div style="text-align: center;">
+            <strong style="font-size: 1rem;">${districtName}</strong><br/>
+            Total Crimes: ${stats ? stats.totalCrimes : "N/A"}<br/>
+            Arrest Rate: ${stats ? stats.arrestRate.toFixed(2) : "N/A"}%
+          </div>
+        `;
+          overlay.setPosition(evt.coordinate);
+          popupContainer.current.innerHTML = content;
+          overlay.setElement(popupContainer.current);
+
+          if (popupTimeout) {
+            clearTimeout(popupTimeout);
+          }
+          const timeout = setTimeout(() => {
+            overlay.setPosition(undefined);
+          }, 10000);
+          setPopupTimeout(timeout);
+        }
+      } else {
+        overlay.setPosition(undefined);
+      }
+    }, 200),
+    [crimeData, getDistrictStatistics, popupTimeout]
+  );
+
+  const handleSingleClick = useCallback(
+    debounce((evt, map) => {
+      if (map.hasFeatureAtPixel(evt.pixel)) {
+        const feature = map.getFeaturesAtPixel(
+          evt.pixel
+        )[0] as Feature<Geometry>;
+        const districtName = feature.get("community");
+
+        if (districtName && districtName !== currentDistrict) {
+          setDistrictFilterMap(districtName);
+
+          if (selectedFeature) {
+            selectedFeature.setStyle(undefined);
+          }
+          selectedFeature = feature;
+        }
+      }
+    }, 200),
+    [currentDistrict, setDistrictFilterMap]
+  );
+
   useEffect(() => {
     if (
       mapContainer.current &&
@@ -104,69 +171,25 @@ function MapComponent() {
       });
       map.addOverlay(overlay);
 
-      // Show popup mouse hover
-      map.on("pointermove", function (evt) {
-        if (!crimeData) return;
-        if (map.hasFeatureAtPixel(evt.pixel)) {
-          const feature = map.getFeaturesAtPixel(evt.pixel)[0];
-          const districtName = feature.get("community");
-
-          if (popupContainer.current) {
-            const stats = getDistrictStatistics(districtName);
-            const content = `
-              <div style="text-align: center;">
-                <strong style="font-size: 1rem;">${districtName}</strong><br/>
-                Total Crimes: ${stats ? stats.totalCrimes : "N/A"}<br/>
-                Arrest Rate: ${stats ? stats.arrestRate.toFixed(2) : "N/A"}%
-              </div>
-            `;
-            overlay.setPosition(evt.coordinate);
-            popupContainer.current.innerHTML = content;
-            overlay.setElement(popupContainer.current);
-
-            if (popupTimeout) {
-              clearTimeout(popupTimeout);
-            }
-            const timeout = setTimeout(() => {
-              overlay.setPosition(undefined);
-            }, 10000); 
-            setPopupTimeout(timeout);
-          }
-        } else {
-          overlay.setPosition(undefined);
-        }
-      });
-
-      // Select feature onclick
-       map.on("singleclick", function (evt) {
-         if (map.hasFeatureAtPixel(evt.pixel)) {
-           const feature = map.getFeaturesAtPixel(
-             evt.pixel
-           )[0] as Feature<Geometry>;
-           const districtName = feature.get("community");
-
-           if (districtName && districtName !== currentDistrict) {
-             setDistrictFilterMap(districtName);
-            //  setCurrentDistrict(districtName)
-
-             if (selectedFeature) {
-               selectedFeature.setStyle(undefined);
-             }
-            //  feature.setStyle(selectedStyle);
-             selectedFeature = feature;
-           }
-         }
-       });
+      map.on("pointermove", (evt) => handlePointerMove(evt, map, overlay));
+      map.on("singleclick", (evt) => handleSingleClick(evt, map));
 
       setMapInitialized(true);
     }
-  }, [boundaries]);
+  }, [
+    boundaries,
+    crimeData,
+    loading,
+    mapInitialized,
+    handlePointerMove,
+    handleSingleClick,
+  ]);
 
-  // useEffect(() => {
-  //   if (currentDistrict && currentYear) {
-  //     getFilteredData(currentYear, currentDistrict);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (currentDistrict && currentYear) {
+      getFilteredData(currentYear, currentDistrict);
+    }
+  }, [ getFilteredData]);
 
   return (
     <div>
