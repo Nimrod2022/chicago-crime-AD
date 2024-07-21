@@ -12,6 +12,7 @@ import {
   ApiResponseProps,
   CrimeContextProps,
   CrimeFeatureProps,
+  DistrictStatistics,
 } from "../../types";
 
 // Context
@@ -50,8 +51,13 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
-  // Filter data
+  useEffect(() => {
+    if (currentDistrict !== "Select District") {
+      getFilteredData(currentYear, currentDistrict);
+    }
+  }, [currentYear, currentDistrict]);
 
+  // Filter data
   function getFilteredData(year: number, district: string) {
     setCurrentYear(year);
     setSelectedDistrict(district);
@@ -84,12 +90,43 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     if (formattedName !== currentDistrict) {
       setCurrentDistrict(formattedName);
       setSelectedDistrict(formattedName);
-
-      // getFilteredData(currentYear, formattedName);
     }
   };
 
-  // console.log(filteredData)
+  const getDistrictStatistics = (
+    district: string
+  ): DistrictStatistics | null => {
+    if (!crimeData) {
+      console.log("Crime data is not available.");
+      return null;
+    }
+
+    console.log("Crime data available for statistics calculation.");
+
+    const formattedDistrict = district.trim().toLowerCase();
+    const districtCrimes = crimeData.features.filter((crime) => {
+      console.log(
+        `Checking crime for district: ${crime.properties.district_name
+          .trim()
+          .toLowerCase()}`
+      );
+      return (
+        crime.properties.district_name.trim().toLowerCase() ===
+        formattedDistrict
+      );
+    });
+
+    const totalCrimes = districtCrimes.length;
+    const arrests = districtCrimes.filter(
+      (crime) => crime.properties.arrest === true
+    ).length;
+    const arrestRate = totalCrimes > 0 ? (arrests / totalCrimes) * 100 : 0;
+
+    console.log(
+      `Stats for district ${district}: Total Crimes: ${totalCrimes}, Arrest Rate: ${arrestRate}`
+    );
+    return { totalCrimes, arrestRate };
+  };
 
   return (
     <CrimeContext.Provider
@@ -106,6 +143,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
         setCurrentDistrict,
         toTitleCase,
         setDistrictFilterMap,
+        getDistrictStatistics,
       }}
     >
       {children}

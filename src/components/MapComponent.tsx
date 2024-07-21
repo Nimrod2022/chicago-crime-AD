@@ -7,7 +7,6 @@ import { fromLonLat } from "ol/proj";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
 import "ol/ol.css";
-import { fetchData } from "../../utils";
 import VectorLayer from "ol/layer/Vector";
 import Style from "ol/style/Style";
 import Stroke from "ol/style/Stroke";
@@ -16,6 +15,7 @@ import Overlay from "ol/Overlay";
 import Feature from "ol/Feature";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { Geometry } from "ol/geom";
+import { fetchData } from "../../utils";
 
 const BOUNDARIES_URL =
   "https://chicago-crime-24.s3.eu-north-1.amazonaws.com/chicago.geojson";
@@ -24,13 +24,17 @@ function MapComponent() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const popupContainer = useRef<HTMLDivElement>(null);
   const [boundaries, setBoundaries] = useState(null);
+  const [mapInitialized, setMapInitialized] = useState(false);
+  const [popupTimeout, setPopupTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
-    currentDistrict,
-    setDistrictFilterMap,
+    crimeData,
+    loading,
+    getDistrictStatistics,
     currentYear,
+    setCurrentDistrict,
     getFilteredData,
-    toTitleCase,
+    setDistrictFilterMap,
   } = useCrimeContext();
 
   let selectedFeature: Feature<Geometry> | null = null;
@@ -39,7 +43,9 @@ function MapComponent() {
   useEffect(() => {
     const getBoundaries = async () => {
       try {
+        console.log("Fetching boundaries data...");
         const data = await fetchData(BOUNDARIES_URL);
+        console.log("Fetched boundaries data:", data);
         setBoundaries(data);
       } catch (error) {
         console.error("Error fetching boundaries:", error);
@@ -48,8 +54,16 @@ function MapComponent() {
     getBoundaries();
   }, []);
 
+  // Initialize map
   useEffect(() => {
-    if (mapContainer.current && boundaries) {
+    if (
+      mapContainer.current &&
+      boundaries &&
+      crimeData &&
+      !loading &&
+      !mapInitialized
+    ) {
+      console.log("Initializing map...");
       const vectorSource = new VectorSource({
         features: new GeoJSON().readFeatures(boundaries, {
           featureProjection: "EPSG:3857",
@@ -69,7 +83,6 @@ function MapComponent() {
         }),
       });
 
-      // Initialize map
       const map = new Map({
         target: mapContainer.current,
         layers: [
@@ -94,64 +107,81 @@ function MapComponent() {
 
       // Show district name on mouse hover
       map.on("pointermove", function (evt) {
+        if (!crimeData) {
+          console.log("crimeData is not available.");
+          return;
+        }
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(evt.pixel)[0];
           const districtName = feature.get("community");
+
+          console.log("Hovered district name:", districtName);
+
           if (popupContainer.current) {
+            const stats = getDistrictStatistics(districtName);
+
+            console.log("District stats:", stats);
+
+            const content = `
+              <div style="text-align: center;">
+                <strong style="font-size: 1rem;">${districtName}</strong><br/>
+                Total Crimes: ${stats ? stats.totalCrimes : "N/A"}<br/>
+                Arrest Rate: ${stats ? stats.arrestRate.toFixed(2) : "N/A"}%
+              </div>
+            `;
             overlay.setPosition(evt.coordinate);
-            popupContainer.current.innerHTML = districtName;
+            popupContainer.current.innerHTML = content;
             overlay.setElement(popupContainer.current);
+
+            if (popupTimeout) {
+              clearTimeout(popupTimeout);
+            }
+            const timeout = setTimeout(() => {
+              overlay.setPosition(undefined);
+            }, 10000); // Adjust the timeout duration (in milliseconds) as needed
+            setPopupTimeout(timeout);
           }
         } else {
           overlay.setPosition(undefined);
         }
       });
 
-      // Selected district style
-      const selectedStyle = new Style({
-        fill: new Fill({
-          color: "#3615FF",
-        }),
-      });
-
       // Select feature onclick
       map.on("singleclick", function (evt) {
+        if (!crimeData) {
+          console.log("crimeData is not available.");
+          return;
+        }
         if (map.hasFeatureAtPixel(evt.pixel)) {
           const feature = map.getFeaturesAtPixel(
             evt.pixel
           )[0] as Feature<Geometry>;
           const districtName = feature.get("community");
 
-          if (districtName && districtName !== currentDistrict) {
-            setDistrictFilterMap(districtName);
+          console.log("Clicked district name:", districtName);
 
-            // if (selectedFeature) {
-            //   selectedFeature.setStyle(undefined);
-            // }
-            // feature.setStyle(selectedStyle);
+          if (districtName) {
+            setDistrictFilterMap(districtName);
             selectedFeature = feature;
           }
         }
       });
 
-      // Clean-up function
-      return () => {
-        map.setTarget(undefined);
-      };
+      setMapInitialized(true);
+    } else {
+      console.log("Map initialization conditions not met.");
+      console.log("boundaries:", boundaries);
+      console.log("loading:", loading);
+      console.log("crimeData:", crimeData);
+      console.log("mapInitialized:", mapInitialized);
     }
-  }, [boundaries]);
-
-  useEffect(() => {
-    if (currentDistrict && currentYear) {
-      getFilteredData(currentYear, currentDistrict);
-    }
-  }, []);
+  }, [boundaries, crimeData, loading, mapInitialized]);
 
   return (
     <div>
       <div ref={mapContainer} className="map"></div>
-      <div ref={popupContainer} className="ol-popup">
-        <div className="ol-popup-content"></div>
+      <div ref={popupContainer} className="bg-white p-2 rounded-xl">
+        <div className="w-[250px]"></div>
       </div>
     </div>
   );

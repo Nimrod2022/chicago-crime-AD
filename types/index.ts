@@ -84,6 +84,7 @@ export interface CrimeContextProps {
   currentDistrict: string;
   setCurrentDistrict: (district: string) => void;
   toTitleCase: (district: string) => void;
+  getDistrictStatistics: (district: string) => DistrictStatistics | null;
 }
 
 export interface TotalCrimesChartDataType {
@@ -113,6 +114,11 @@ export interface DomesticDataType {
   year: number;
   Domestic: number;
   NotDomestic: number;
+}
+
+export interface DistrictStatistics{
+  totalCrimes: number
+  arrestRate: number
 }
 
 
