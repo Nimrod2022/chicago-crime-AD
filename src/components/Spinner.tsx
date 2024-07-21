@@ -23,7 +23,7 @@ const Spinner = () => {
         }
       `}</style>
 
-      <p className="pt-3 italic">Hang tight! We're getting things ready...</p>
+      <p className="pt-3 italic">Hang tight! We&apos;re getting things ready...</p>
     </div>
   );
 };
