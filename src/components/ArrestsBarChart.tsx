@@ -79,7 +79,7 @@ export function ArrestsBarChart() {
         <CardDescription className="text-xs italic text-center px-5">{`A comparison of arrests made on the crimes versus no arrests made from 2019 - ${currentYear}.`}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[230px]">
+        <ChartContainer config={chartConfig} className="max-h-[230px] lg:max-h-[270px]">
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={chartData}>
               <CartesianGrid vertical={false} />
