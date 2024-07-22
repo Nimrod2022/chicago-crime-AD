@@ -97,7 +97,10 @@ export function CrimeTrendChart() {
           <CardDescription className="text-xs  italic text-center px-10">{`Trend of each crime over time from 2019 - ${currentYear}.`}</CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="max-h-[230px]">
+          <ChartContainer
+            config={chartConfig}
+            className="max-h-[230px] xl:max-h-[270px]"
+          >
             <ResponsiveContainer width="100%" height={400}>
               <LineChart
                 data={chartData}
