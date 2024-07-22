@@ -184,7 +184,7 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="flex gap-3 mb-2  justify-center  ">
+          {/* <div className="flex gap-3 mb-2  justify-center  ">
             <a
               href="https://github.com/Nimrod2022"
               target="_blank"
@@ -215,7 +215,7 @@ const Contact = () => {
             >
               <FaSquareXTwitter className="size-7 text-[#9191F3]" />
             </a>
-          </div>
+          </div> */}
         </div>
       </section>
     </>
