@@ -36,8 +36,8 @@ export default function Home() {
 
           <div className="w-full sm:w-[50%] h-full flex flex-col">
             <div className="flex-shrink-0">
-              <nav className="w-full h-8 md:h-14">
-                <div className="flex justify-between px-5 py-3 shadow-md h-full">
+              <nav className="w-full">
+                <div className="flex justify-between px-5 py-2 shadow-md ">
                   <h1
                     onClick={handleCWWClick}
                     className="md:text-xl font-semibold flex text-[#3615FF] cursor-pointer items-center gap-x-1.5"

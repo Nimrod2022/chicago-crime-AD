@@ -39,7 +39,7 @@ function CrimeFilterForm() {
   }, [selectedDistrict]);
 
   return (
-    <div className="pt-5 px-5 justify-center items-center flex">
+    <div className="py-3 px-5 justify-center items-center flex">
       <form onSubmit={handleSubmit} className="flex gap-x-10">
         <div className="">
           <Listbox value={currentYear} onChange={setCurrentYear}>
