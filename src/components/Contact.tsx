@@ -1,6 +1,10 @@
 import { toast } from "react-toastify";
 import { useState } from "react";
 
+import { FaSquareXTwitter, FaLinkedin } from "react-icons/fa6";
+
+import { FaGithubSquare, FaXingSquare } from "react-icons/fa";
+
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -89,11 +93,13 @@ const Contact = () => {
   return (
     <>
       <section id="contact">
-        <div className="flex  flex-col justify-center items-center bg-blue-100 relative pt-20">
+        <div className="flex  flex-col justify-center items-center relative pt-20">
           <h1 className="text-xl md:text-3xl text-[#7879F1] font-extrabold">
             Get in Touch
           </h1>
-          <p className="italic text-md pt-3">We look forward to receiving your feedback.</p>
+          <p className="italic text-md pt-3">
+            We look forward to receiving your feedback.
+          </p>
           <div className="w-full md:flex rounded-2xl  md:w-auto my-10 md:px-0 px-3">
             <div className="rounded-lg md:rounded-none bg-white p-8 shadow-lg lg:col-span-3 lg:p-12 border border-gray-300">
               <form
@@ -177,6 +183,38 @@ const Contact = () => {
                 </div>
               </form>
             </div>
+          </div>
+          <div className="flex gap-3 mt-5  justify-center  ">
+            <a
+              href="https://github.com/Nimrod2022"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithubSquare className="size-10 text-[#9191F3] " />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/nimrod-kibet-b6b340115/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedin className="size-10 text-[#9191F3]" />
+            </a>
+            <a
+              href="https://www.xing.com/profile/Nimrod_Kibet"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaXingSquare className="size-10 text-[#9191F3]" />
+            </a>
+
+            <a
+              href="https://twitter.com/MandelaGI?t=ejgoi2MMFnyuNXcdNoMXtA&s=09"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaSquareXTwitter className="size-10 text-[#9191F3]" />
+            </a>
           </div>
         </div>
       </section>
