@@ -29,7 +29,7 @@ export default function Home() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className=" flex overflow-hidden bg-[#F0F3F9]">
+        <div className=" flex overflow-hidden">
           <div className="flex-1">
             <MapComponent />
           </div>
@@ -76,17 +76,17 @@ export default function Home() {
                 filteredData && (
                   <div className="h-full ">
                     <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 h-full">
-                      <div className="border-r-0 md:border-r-2 border-t-2 border-b-2 md:border-b-0">
+                      <div className="border-r-0 md:border-r-[1.5px] border-t-[1.5px] border-b-[1.5px] md:border-b-0">
                         <TotalCrimesChart />
                       </div>
-                      <div className="border-t-2 border-b-2 md:border-b-0">
+                      <div className="border-t-[1.5px] border-b-[1.5px] md:border-b-0">
                         <DomesticCrimesChart />
                       </div>
 
-                      <div className="border-r-0 md:border-r-2 border-b-2 border-t-0 md:border-t-2">
+                      <div className="border-r-0 md:border-r-[1.5px] border-b-[1.5px] border-t-0 md:border-t-[1.5px]">
                         <CrimeTrendChart />
                       </div>
-                      <div className="border-b-2 border-t-0 md:border-t-2">
+                      <div className="border-b-[1.5px] border-t-0 md:border-t-[1.5px]">
                         <ArrestsBarChart />
                       </div>
                     </div>

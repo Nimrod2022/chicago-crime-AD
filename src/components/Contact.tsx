@@ -93,7 +93,7 @@ const Contact = () => {
   return (
     <>
       <section id="contact">
-        <div className="flex  flex-col justify-center bg-[#F0F3F9] items-center relative mt-20">
+        <div className="flex  flex-col justify-center items-center relative mt-20">
           <h1 className="text-xl md:text-3xl text-[#7879F1] font-extrabold">
             Get in Touch
           </h1>
