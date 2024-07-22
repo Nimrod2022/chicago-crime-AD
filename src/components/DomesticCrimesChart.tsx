@@ -81,14 +81,14 @@ export function DomesticCrimesChart() {
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle className="text-md">Domestic Vs. None domestic</CardTitle>
-        <CardDescription className="text-sm italic text-center px-5">
+        <CardDescription className="text-xs italic text-center px-5">
           {`A breakdown of domestic and none domestic crimes in ${currentYear}.`}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square  max-h-[225px]"
+          className="mx-auto aspect-square  max-h-[230px]"
         >
           <PieChart>
             <Tooltip content={<ChartTooltipContent nameKey="name" />} />

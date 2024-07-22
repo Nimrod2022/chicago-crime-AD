@@ -80,7 +80,7 @@ export function TotalCrimesChart() {
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle className="text-md ">{`Total Crimes Breakdown`}</CardTitle>
-          <CardDescription className="text-center italic text-sm w-[80%]">
+          <CardDescription className="text-center italic text-xs w-[90%]">
             {`A breakdown of total crimes committed in ${selectedDistrict} for ${currentYear}.`}
           </CardDescription>
         </CardHeader>
