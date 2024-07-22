@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chicago Crime Watch (CCW) Project
+
+This project is a sophisticated data visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago. The application is developed with data from the Chicago Data Portal to offer users an intuitive interface for analyzing crime trends and patterns.
+
+ <img src="https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C" alt="Alt Text" width="75%" height="50%">
+
+
+## Live Demo
+
+Check out the live version of the project [chicago-crime](chicago-crime-ad.vercel.app).
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Setup Instructions](#setup-instructions)
+- [Learn More](#learn-more)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Overview
+
+The Chicago Crime Watch (CCW) Project is designed to provide insights into crime patterns in Chicago by providing an interactive dashboard, users can filter data by district, visualize trends over time, and access detailed statistics on various types of crimes.
+
+## Technologies Used
+
+- **Next.js**: A React framework for server-side rendering and generating static websites.
+- **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
+- **React Context API**: For state management across the application.
+- **Chart.js**: For creating interactive and responsive charts.
+- **Leaflet**: For rendering interactive maps.
+- **Axios**: For making HTTP requests to fetch data from the Chicago Data Portal.
+
+## Features
+
+- **Interactive Map**: Filter and display crime incidents by district.
+- **Crime Trends Charts**: Visualize crime trends from 2019 to 2023.
+- **Filter Options**: Customize data views based on user preferences.
+- **Detailed Statistics**: Access comprehensive statistics on various types of crimes.
+- **Responsive Design**: Optimized for both desktop and mobile views.
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up the project locally.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ensure you have the following installed:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js (v14.x or later)
+- npm (v6.x or later) or yarn (v1.x or later)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Setup Instructions
 
-## Learn More
+1. **Clone the repository:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    git clone https://github.com/your-username/ccw-project.git
+    cd ccw-project
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-## Deploy on Vercel
+3. **Run the development server:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
