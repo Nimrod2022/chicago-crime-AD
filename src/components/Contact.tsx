@@ -93,7 +93,7 @@ const Contact = () => {
   return (
     <>
       <section id="contact">
-        <div className="flex  flex-col justify-center items-center relative pt-20">
+        <div className="flex  flex-col justify-center bg-[#F0F3F9] items-center relative mt-20">
           <h1 className="text-xl md:text-3xl text-[#7879F1] font-extrabold">
             Get in Touch
           </h1>
@@ -184,13 +184,13 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="flex gap-3 mt-5  justify-center  ">
+          <div className="flex gap-3 mb-2  justify-center  ">
             <a
               href="https://github.com/Nimrod2022"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaGithubSquare className="size-10 text-[#9191F3] " />
+              <FaGithubSquare className="size-7 text-[#9191F3] " />
             </a>
 
             <a
@@ -198,14 +198,14 @@ const Contact = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaLinkedin className="size-10 text-[#9191F3]" />
+              <FaLinkedin className="size-7 text-[#9191F3]" />
             </a>
             <a
               href="https://www.xing.com/profile/Nimrod_Kibet"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaXingSquare className="size-10 text-[#9191F3]" />
+              <FaXingSquare className="size-7 text-[#9191F3]" />
             </a>
 
             <a
@@ -213,7 +213,7 @@ const Contact = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FaSquareXTwitter className="size-10 text-[#9191F3]" />
+              <FaSquareXTwitter className="size-7 text-[#9191F3]" />
             </a>
           </div>
         </div>

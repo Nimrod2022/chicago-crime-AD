@@ -29,14 +29,14 @@ export default function Home() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className=" flex overflow-hidden">
+        <div className=" flex overflow-hidden bg-[#F0F3F9]">
           <div className="flex-1">
             <MapComponent />
           </div>
 
           <div className="w-full sm:w-[50%] h-full flex flex-col">
             <div className="flex-shrink-0">
-              <nav className="w-full">
+              <nav className="w-full bg-white">
                 <div className="flex justify-between px-5 py-2 shadow-md ">
                   <h1
                     onClick={handleCWWClick}
