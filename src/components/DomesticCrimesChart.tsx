@@ -30,8 +30,8 @@ const chartConfig = {
     label: "Domestic",
     color: "hsl(var(--chart-4))",
   },
-  NotDomestic: {
-    label: "None-domestic",
+  NoneDomestic: {
+    label: "NoneDomestic",
     color: "hsl(var(--chart-7))",
   },
 } satisfies ChartConfig;
@@ -66,9 +66,9 @@ export function DomesticCrimesChart() {
           fill: chartConfig.Domestic.color,
         },
         {
-          name: chartConfig.NotDomestic.label,
+          name: chartConfig.NoneDomestic.label,
           value: nonDomesticCount,
-          fill: chartConfig.NotDomestic.color,
+          fill: chartConfig.NoneDomestic.color,
         },
       ];
 
@@ -97,7 +97,7 @@ export function DomesticCrimesChart() {
                 <Cell key={`cell-${index}`} fill={entry.fill} />
               ))}
               <LabelList
-                dataKey="name"
+                // dataKey="name"
                 position="inside"
                 fill="#000"
                 stroke="none"
@@ -105,6 +105,7 @@ export function DomesticCrimesChart() {
                 formatter={(value: string) => value}
               />
             </Pie>
+            <ChartLegend content={<ChartLegendContent />} />
           </PieChart>
         </ChartContainer>
       </CardContent>

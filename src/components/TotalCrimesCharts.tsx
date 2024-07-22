@@ -37,7 +37,7 @@ export function TotalCrimesChart() {
     );
   };
 
-  // console.log(filteredData)
+  console.log(filteredData)
 
   useEffect(() => {
     if (filteredData) {
@@ -45,7 +45,7 @@ export function TotalCrimesChart() {
       const theftCount = getCrimeCount("battery");
       const batteryCount = getCrimeCount("theft");
       const burglaryCount = getCrimeCount("burglary");
-      const sexOffenseCount = getCrimeCount("sex Offense");
+      const sexOffenseCount = getCrimeCount("sexOffense");
 
       setChartData([
         {
@@ -65,9 +65,9 @@ export function TotalCrimesChart() {
           fill: chartConfig.Burglary.color,
         },
         {
-          type: "Sex Offense",
+          type: "SexOffense",
           Count: sexOffenseCount,
-          fill: chartConfig.Sex.color,
+          fill: chartConfig.SexOffense.color,
         },
       ]);
     }

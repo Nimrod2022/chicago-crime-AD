@@ -40,8 +40,8 @@ export const chartConfig = {
     label: "Battery",
     color: "hsl(var(--chart-6))",
   },
-  Sex: {
-    label: "Sex Offense",
+  SexOffense: {
+    label: "SexOffense",
     color: "hsl(var(--chart-3))",
   },
   Theft: {

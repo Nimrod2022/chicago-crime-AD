@@ -144,7 +144,7 @@ export function CrimeTrendChart() {
                 <Line
                   type="monotone"
                   dataKey="Sex Offense"
-                  stroke={chartConfig.Sex.color}
+                  stroke={chartConfig.SexOffense.color}
                   strokeWidth={2}
                   dot={false}
                 />

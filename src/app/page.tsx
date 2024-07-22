@@ -29,7 +29,7 @@ export default function Home() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="h-screen flex overflow-hidden">
+        <div className=" flex overflow-hidden">
           <div className="flex-1">
             <MapComponent />
           </div>
@@ -50,7 +50,7 @@ export default function Home() {
                     />
                     CCW
                   </h1>
-                  <ul className="flex text-lg text-[#898B8C] gap-5">
+                  <ul className="flex text-lg text-[#3615FF] gap-5">
                     <li
                       onClick={handleFeedbackClick}
                       className="cursor-pointer"
@@ -61,7 +61,7 @@ export default function Home() {
                 </div>
               </nav>
               {!showContact && (
-                <div className="h-20">
+                <div className="h-full">
                   <CrimeFilterForm />
                 </div>
               )}
@@ -77,16 +77,17 @@ export default function Home() {
                   <div className="h-full ">
                     <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 h-full">
                       <div className="border-r-0 md:border-r-2 border-t-2 border-b-2 md:border-b-0">
-                        <TotalCrimesChart  />
+                        <TotalCrimesChart />
                       </div>
                       <div className="border-t-2 border-b-2 md:border-b-0">
-                        <ArrestsBarChart  />
+                        <DomesticCrimesChart />
                       </div>
+
                       <div className="border-r-0 md:border-r-2 border-b-2 border-t-0 md:border-t-2">
                         <CrimeTrendChart />
                       </div>
                       <div className="border-b-2 border-t-0 md:border-t-2">
-                        <DomesticCrimesChart />
+                        <ArrestsBarChart />
                       </div>
                     </div>
                   </div>
