@@ -1,9 +1,7 @@
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-import { FaSquareXTwitter, FaLinkedin } from "react-icons/fa6";
 
-import { FaGithubSquare, FaXingSquare } from "react-icons/fa";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -184,38 +182,7 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          {/* <div className="flex gap-3 mb-2  justify-center  ">
-            <a
-              href="https://github.com/Nimrod2022"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaGithubSquare className="size-7 text-[#9191F3] " />
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/nimrod-kibet-b6b340115/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaLinkedin className="size-7 text-[#9191F3]" />
-            </a>
-            <a
-              href="https://www.xing.com/profile/Nimrod_Kibet"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaXingSquare className="size-7 text-[#9191F3]" />
-            </a>
-
-            <a
-              href="https://twitter.com/MandelaGI?t=ejgoi2MMFnyuNXcdNoMXtA&s=09"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaSquareXTwitter className="size-7 text-[#9191F3]" />
-            </a>
-          </div> */}
+         
         </div>
       </section>
     </>

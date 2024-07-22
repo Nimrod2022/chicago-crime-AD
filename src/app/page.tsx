@@ -9,27 +9,43 @@ import { CrimeTrendChart } from "@/components/CrimeTrendChart";
 import { ArrestsBarChart } from "@/components/ArrestsBarChart";
 import { DomesticCrimesChart } from "@/components/DomesticCrimesChart";
 import Contact from "@/components/Contact";
-import { useState } from "react";
+import About from "@/components/About";
+import { useState, useEffect } from "react";
 import Spinner from "@/components/Spinner";
 
 export default function Home() {
   const [showContact, setShowContact] = useState(false);
+  const [showAbout, setShowAbout] = useState(true); 
 
   const handleFeedbackClick = () => {
     setShowContact(true);
+    setShowAbout(false);
   };
 
   const handleCWWClick = () => {
     setShowContact(false);
+    setShowAbout(false);
+  };
+
+  const handleAboutClick = () => {
+    setShowAbout(true);
+    setShowContact(false);
   };
 
   const { filteredData, loading } = useCrimeContext();
+
+  useEffect(() => {
+    if (filteredData && filteredData.length > 0) {
+      setShowAbout(false);
+    }
+  }, [filteredData]);
+
   return (
     <main>
       {loading ? (
         <Spinner />
       ) : (
-        <div className=" flex overflow-hidden">
+        <div className="flex overflow-hidden">
           <div className="flex-1">
             <MapComponent />
           </div>
@@ -51,6 +67,9 @@ export default function Home() {
                     CCW
                   </h1>
                   <ul className="flex text-lg text-[#3615FF] gap-5">
+                    <li onClick={handleAboutClick} className="cursor-pointer">
+                      About
+                    </li>
                     <li
                       onClick={handleFeedbackClick}
                       className="cursor-pointer"
@@ -72,9 +91,13 @@ export default function Home() {
                 <div className="h-full">
                   <Contact />
                 </div>
+              ) : showAbout ? (
+                <div className="h-full">
+                  <About />
+                </div>
               ) : (
                 filteredData && (
-                  <div className="h-full ">
+                  <div className="h-full">
                     <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 h-full">
                       <div className="border-r-0 md:border-r-[1.5px] border-t-[1.5px] border-b-[1.5px] md:border-b-0">
                         <TotalCrimesChart />
