@@ -1,13 +1,15 @@
 # Chicago Crime Watch (CCW) Project
 
-This project is a sophisticated data visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago. The application is developed with data from the Chicago Data Portal to offer users an intuitive interface for analyzing crime trends and patterns.
 
- <img src="https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C" alt="Alt Text" width="75%" height="50%">
+This project is a sophisticated data visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago.
+The application is developed with data from the Chicago Data Portal to offer users an intuitive interface for analyzing crime trends and patterns.
+
+<img src="https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C" alt="Alt Text" width="75%" height="auto%">
 
 
 ## Live Demo
 
-Check out the live version of the project [chicago-crime](chicago-crime-ad.vercel.app).
+Check out the live version of the project: [Chicago Crime Watch Live](https://chicago-crime-ad.vercel.app)
 
 ## Table of Contents
 
@@ -25,13 +27,11 @@ Check out the live version of the project [chicago-crime](chicago-crime-ad.verce
 The Chicago Crime Watch (CCW) Project is designed to provide insights into crime patterns in Chicago by providing an interactive dashboard, users can filter data by district, visualize trends over time, and access detailed statistics on various types of crimes.
 
 ## Technologies Used
-
-- **Next.js**: A React framework for server-side rendering and generating static websites.
-- **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
-- **React Context API**: For state management across the application.
-- **Chart.js**: For creating interactive and responsive charts.
-- **Leaflet**: For rendering interactive maps.
-- **Axios**: For making HTTP requests to fetch data from the Chicago Data Portal.
+![Next.js](https://img.shields.io/badge/next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![GeoServer](https://img.shields.io/badge/geoserver-3A76AF.svg?style=for-the-badge&logo=geoserver&logoColor=white)
+![OpenLayers](https://img.shields.io/badge/OpenLayers-1F4B99.svg?style=for-the-badge&logo=openlayers&logoColor=white)
 
 ## Features
 
@@ -55,22 +55,16 @@ Ensure you have the following installed:
 ### Setup Instructions
 
 1. **Clone the repository:**
-
     ```bash
-    git clone https://github.com/your-username/ccw-project.git
-    cd ccw-project
+    git clone https://github.com/Nimrod2022/chicago-crime-AD
     ```
-
 2. **Install dependencies:**
-
     ```bash
     npm install
     # or
     yarn install
     ```
-
 3. **Run the development server:**
-
     ```bash
     npm run dev
     # or
@@ -80,7 +74,21 @@ Ensure you have the following installed:
     # or
     bun dev
     ```
-
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Learn More
 
+For more information on using the technologies included in this project, refer to the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [GeoServer Documentation](http://geoserver.org/documentation/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [OpenLayers Documentation](https://openlayers.org/en/latest/doc/)
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
