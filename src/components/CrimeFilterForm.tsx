@@ -8,9 +8,7 @@ import { useEffect } from "react";
 
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { CiLocationOn } from "react-icons/ci";
-import { SlCalender } from "react-icons/sl";
-
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import { availableYears, chicagoDistricts, crimeTypes } from "../../constants";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 

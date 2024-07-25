@@ -18,20 +18,14 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 import { YearDataType } from "../../types";
 
- chartConfig  satisfies ChartConfig;
+chartConfig satisfies ChartConfig;
 
 export function CrimeTrendChart() {
   const { currentYear, crimeData, selectedDistrict } = useCrimeContext();

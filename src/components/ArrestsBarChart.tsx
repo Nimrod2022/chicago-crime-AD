@@ -13,13 +13,17 @@ import {
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { useState, useEffect } from "react";
 import { ArrestsDataType } from "../../types";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
   ChartLegendContent,
-  ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 

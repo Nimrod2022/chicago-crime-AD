@@ -5,24 +5,19 @@ import { useState, useEffect } from "react";
 import { useCrimeContext } from "@/contexts/CrimeDataContext";
 import { DomesticDataType } from "../../types";
 
-
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  
-  
 } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-
-  ChartTooltip,
-  ChartTooltipContent
+  ChartTooltipContent,
 } from "@/components/ui/chart";
 
 const chartConfig = {

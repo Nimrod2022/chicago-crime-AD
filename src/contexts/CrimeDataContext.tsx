@@ -70,7 +70,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     getCrimeData();
   }, []);
 
-  // Function to filter data by year and district
+  // Filter data by year and district
   const getFilteredData = useCallback(
     (year: number, district: string) => {
       setCurrentYear(year);
@@ -89,7 +89,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [crimeData]
   );
 
-  // Function to convert a string to title case
+  // Convert a string to title case
   const toTitleCase = useCallback((str: string) => {
     return str
       .toLowerCase()
@@ -98,7 +98,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
       .join(" ");
   }, []);
 
-  // Function to set the current district filter based on a map selection
+  // Set the current district filter based on a map selection
   const setDistrictFilterMap = useCallback(
     (district: string) => {
       const formattedName = toTitleCase(district);
@@ -111,7 +111,7 @@ export const CrimeProvider: React.FC<CrimeProviderProps> = ({ children }) => {
     [currentDistrict, toTitleCase]
   );
 
-  // Function to get statistics for a district
+  // Get statistics for a district
   const getDistrictStatistics = useCallback(
     (district: string): DistrictStatistics | null => {
       if (!crimeData) {

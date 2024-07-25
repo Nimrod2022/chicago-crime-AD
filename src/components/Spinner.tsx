@@ -5,7 +5,7 @@ const Spinner = () => {
       <div className="loader"></div>
       <style jsx>{`
         .loader {
-          border: 8px solid #f3f3f3;
+          border: 8px solid #ffffff;
           border-top: 8px solid #7879f1;
           border-radius: 50%;
           width: 60px;

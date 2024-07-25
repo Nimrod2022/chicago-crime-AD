@@ -159,7 +159,7 @@ function MapComponent() {
     ]
   );
 
-  // Handle single click on the map to select a district
+  // Handle single click on map to select a district
   const handleSingleClick = useCallback(
     debounce((evt, map) => {
       if (map.hasFeatureAtPixel(evt.pixel)) {
