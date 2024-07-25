@@ -1,7 +1,7 @@
 # Chicago Crime Watch (CCW) Project
 
 
-This project is a sophisticated data visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago.
+CCW project is a crime visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago.
 The application is developed with data from the Chicago Data Portal to offer users an intuitive interface for analyzing crime trends and patterns.
 
 <img src="https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C" alt="Alt Text" width="75%" height="auto%">
@@ -13,7 +13,6 @@ Check out the live version of the project: [Chicago Crime Watch Live](https://ch
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Getting Started](#getting-started)
@@ -21,10 +20,6 @@ Check out the live version of the project: [Chicago Crime Watch Live](https://ch
 - [Learn More](#learn-more)
 - [Contributing](#contributing)
 - [License](#license)
-
-## Overview
-
-The Chicago Crime Watch (CCW) Project is designed to provide insights into crime patterns in Chicago by providing an interactive dashboard, users can filter data by district, visualize trends over time, and access detailed statistics on various types of crimes.
 
 ## Technologies Used
 ![Next.js](https://img.shields.io/badge/next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
@@ -39,7 +34,6 @@ The Chicago Crime Watch (CCW) Project is designed to provide insights into crime
 - **Crime Trends Charts**: Visualize crime trends from 2019 to 2023.
 - **Filter Options**: Customize data views based on user preferences.
 - **Detailed Statistics**: Access comprehensive statistics on various types of crimes.
-- **Responsive Design**: Optimized for both desktop and mobile views.
 
 ## Getting Started
 
