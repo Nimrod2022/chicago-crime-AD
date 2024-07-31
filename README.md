@@ -1,15 +1,16 @@
 # Chicago Crime Watch (CCW) Project
 
+CCW is a crime visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago. Leveraging data from the Chicago Data Portal, this application offers an intuitive interface for analyzing crime trends and patterns across the city.
 
-CCW project is a crime visualization platform designed to provide insightful and interactive crime statistics for various districts in Chicago.
-The application is developed with data from the Chicago Data Portal to offer users an intuitive interface for analyzing crime trends and patterns.
+![Chicago Crime Watch](https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C)
 
-<img src="https://drive.google.com/uc?export=view&id=1Icxu9oeA6Tgn0xG2clbTiHVlaaSimC3C" alt="Alt Text" width="75%" height="auto%">
-
+---
 
 ## Live Demo
 
-Check out the live version of the project: [Chicago Crime Watch Live](https://chicago-crime-ad.vercel.app)
+Experience the application live: [Chicago Crime Watch Live](https://chicago-crime-ad.vercel.app)
+
+---
 
 ## Table of Contents
 
@@ -21,19 +22,29 @@ Check out the live version of the project: [Chicago Crime Watch Live](https://ch
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Technologies Used
-![Next.js](https://img.shields.io/badge/next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![GeoServer](https://img.shields.io/badge/geoserver-3A76AF.svg?style=for-the-badge&logo=geoserver&logoColor=white)
-![OpenLayers](https://img.shields.io/badge/OpenLayers-1F4B99.svg?style=for-the-badge&logo=openlayers&logoColor=white)
+
+- **Frontend:**
+  - ![Next.js](https://img.shields.io/badge/next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
+  - ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+- **Backend:**
+  - ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+  - ![GeoServer](https://img.shields.io/badge/geoserver-3A76AF.svg?style=for-the-badge&logo=geoserver&logoColor=white)
+- **Mapping:**
+  - ![OpenLayers](https://img.shields.io/badge/OpenLayers-1F4B99.svg?style=for-the-badge&logo=openlayers&logoColor=white)
+
+---
 
 ## Features
 
-- **Interactive Map**: Filter and display crime incidents by district. 
-- **Crime Trends Charts**: Visualize crime trends from 2019 to 2023.
-- **Filter Options**: Customize data views based on user preferences. You can filter the district data by clicking on a district on the map or using the filter form.
-- **Detailed Statistics**: Access comprehensive statistics on various types of crimes.
+- **Interactive Map:** Filter and display crime incidents by district.
+- **Crime Trends Charts:** Visualize crime trends from 2019 to 2023.
+- **Filter Options:** Customize data views based on user preferences. Filter data by clicking on a district on the map or using the filter form.
+- **Detailed Statistics:** Access comprehensive statistics on various types of crimes.
+
+---
 
 ## Getting Started
 
@@ -70,18 +81,25 @@ Ensure you have the following installed:
     ```
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+---
+
 ## Learn More
 
 For more information on using the technologies included in this project, refer to the following resources:
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [GeoServer Documentation](http://geoserver.org/documentation/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [OpenLayers Documentation](https://openlayers.org/en/latest/doc/)
 
+---
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+---
 
 ## License
 
