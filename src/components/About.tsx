@@ -36,7 +36,7 @@ const About = () => {
       </p>
       <div className="flex gap-3 pt-3  justify-center  ">
         <a
-          href="https://github.com/Nimrod2022"
+          href="https://github.com/Nimrod2022/chicago-crime-AD"
           target="_blank"
           rel="noopener noreferrer"
         >

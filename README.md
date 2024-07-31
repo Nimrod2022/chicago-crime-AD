@@ -30,9 +30,9 @@ Check out the live version of the project: [Chicago Crime Watch Live](https://ch
 
 ## Features
 
-- **Interactive Map**: Filter and display crime incidents by district.
+- **Interactive Map**: Filter and display crime incidents by district. 
 - **Crime Trends Charts**: Visualize crime trends from 2019 to 2023.
-- **Filter Options**: Customize data views based on user preferences.
+- **Filter Options**: Customize data views based on user preferences. You can filter the district data by clicking on a district on the map or using the filter form.
 - **Detailed Statistics**: Access comprehensive statistics on various types of crimes.
 
 ## Getting Started
