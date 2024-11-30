@@ -1,5 +1,5 @@
 export async function fetchData(url:string) {
-  console.log("Fetching URL:", url);
+  //console.log("Fetching URL:", url);
   try {
     const response = await fetch(url);
     if (!response.ok) {

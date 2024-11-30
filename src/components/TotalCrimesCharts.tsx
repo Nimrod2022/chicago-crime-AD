@@ -37,7 +37,7 @@ export function TotalCrimesChart() {
     );
   };
 
-  console.log(filteredData)
+  //console.log(filteredData)
 
   useEffect(() => {
     if (filteredData) {
